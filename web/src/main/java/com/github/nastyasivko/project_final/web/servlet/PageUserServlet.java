@@ -16,14 +16,7 @@ public class PageUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
-        Object login = rq.getSession().getAttribute("authUser");
-        rq.setAttribute("authUser", login);
         WebUtils.forwardToJsp("pageUser", rq, rs);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
-        //Object login = rq.getSession().getAttribute("authUser");
-        //rq.setAttribute("authUser", login);
-    }
 }

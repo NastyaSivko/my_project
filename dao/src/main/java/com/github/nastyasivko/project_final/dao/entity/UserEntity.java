@@ -58,8 +58,8 @@ public class UserEntity {
         return phone;
     }
 
-    public void setPhone(String login) {
-        this.phone = login;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public LoginUsersEntity getLoginUsersEntity() {

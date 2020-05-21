@@ -2,16 +2,16 @@ package com.github.nastyasivko.project_final.model;
 
 public class LoginUsers {
 
-    private String name;
+    private Long id;
     private String login;
     private String password;
+    private Long userId;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public LoginUsers( Long id, String login, String password, Long userId) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -30,10 +30,20 @@ public class LoginUsers {
         this.password = password;
     }
 
-    public LoginUsers( String name, String login, String password) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
 }

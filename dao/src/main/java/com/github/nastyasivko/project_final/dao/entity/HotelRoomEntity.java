@@ -26,6 +26,13 @@ public class HotelRoomEntity {
     @ManyToMany(mappedBy = "hotelRoomEntities", cascade = CascadeType.ALL)
     private List<LoginUsersEntity> loginUsersEntities = new ArrayList<>();
 
+    public HotelRoomEntity(Long id, String name, Integer beds, Integer numberRoom, CostRoomsEntity costRoomsEntity) {
+        this.id = id;
+        this.name = name;
+        this.beds = beds;
+        this.numberRoom = numberRoom;
+    }
+
     public HotelRoomEntity() {
     }
 

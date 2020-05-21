@@ -28,7 +28,7 @@
 //        final HotelRoom newRoom = roomDao.getElement(NUMBER_ROOM_FOR_TEST);
 //        assertTrue(result);
 //        assertEquals(room.getName(), newRoom.getName());
-//        assertEquals(room.getBeds(), newRoom.getBeds());
+//        assertEquals(room.getListBeds(), newRoom.getListBeds());
 //        assertEquals(room.getNumberRoom(), newRoom.getNumberRoom());
 //    }
 //
@@ -46,7 +46,7 @@
 //        assertTrue(resultAdd);
 //        assertTrue(resultDelete);
 //        assertNull(newRoom.getName());
-//        assertEquals(NUMBER_ZERO, newRoom.getBeds());
+//        assertEquals(NUMBER_ZERO, newRoom.getListBeds());
 //        assertEquals(NUMBER_ZERO, newRoom.getNumberRoom());
 //    }
 //
@@ -60,7 +60,7 @@
 //        assertTrue(resultAdd);
 //        assertTrue(resultUpdate);
 //        assertEquals(updateRoom.getName(), newRoom.getName());
-//        assertEquals(updateRoom.getBeds(), newRoom.getBeds());
+//        assertEquals(updateRoom.getListBeds(), newRoom.getListBeds());
 //        assertEquals(updateRoom.getNumberRoom(), newRoom.getNumberRoom());
 //    }
 //
@@ -76,7 +76,7 @@
 //
 //        assertTrue(resultAdd);
 //        assertEquals(room.getName(), newRoom.getName());
-//        assertEquals(room.getBeds(), newRoom.getBeds());
+//        assertEquals(room.getListBeds(), newRoom.getListBeds());
 //        assertEquals(room.getNumberRoom(), newRoom.getNumberRoom());
 //    }
 //

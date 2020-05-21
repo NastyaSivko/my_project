@@ -24,7 +24,7 @@
 //        try (Connection connection = DataSource.getInstance().getConnection();
 //             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 //            ps.setString(1, room.getName());
-//            ps.setInt(2, room.getBeds());
+//            ps.setInt(2, room.getListBeds());
 //            ps.setInt(3, room.getNumberRoom());
 //            ps.executeUpdate();
 //            log.info("room saved: {}", room);
@@ -56,7 +56,7 @@
 //        try (Connection connection = DataSource.getInstance().getConnection();
 //             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 //            ps.setString(1, room.getName());
-//            ps.setInt(2, room.getBeds());
+//            ps.setInt(2, room.getListBeds());
 //            ps.setInt(3, room.getNumberRoom());
 //            ps.executeUpdate();
 //            log.info("room update: {}", room);
@@ -77,7 +77,7 @@
 //            try (ResultSet rs = ps.executeQuery()){
 //                if(rs.next()) {
 //                    room.setName(rs.getString("name"));
-//                    room.setBeds(rs.getInt("beds"));
+//                    room.setListBeds(rs.getInt("beds"));
 //                    room.setNumberRoom(numberRoom);
 //                }
 //            }

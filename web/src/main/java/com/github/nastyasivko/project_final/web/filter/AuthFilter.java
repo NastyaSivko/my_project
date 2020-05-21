@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns={"/admin", "/pageuser"})
+@WebFilter(urlPatterns={"/pageuser","/userbuy","/admin","/vieworder"})
 public class AuthFilter implements Filter {
 
     @Override
@@ -16,7 +16,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest rq = (HttpServletRequest) servletRequest;
         Object user = rq.getSession().getAttribute("authUser");
         if (user == null) {
-            WebUtils.forwardToJsp("signup", rq, ((HttpServletResponse) servletResponse));
+            WebUtils.forwardToJsp("signIn", rq, ((HttpServletResponse) servletResponse));
             return;
         }
         filterChain.doFilter(rq, servletResponse);

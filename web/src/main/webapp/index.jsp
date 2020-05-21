@@ -20,12 +20,12 @@
     </a>
 </th>
 <th>
-    <a href="${pageContext.request.contextPath}/phone">
+    <a href="${pageContext.request.contextPath}/login">
        <button style="font-size: 5mm">Sign up</button>
     </a>
 </th>
 <th>
-    <a href="${pageContext.request.contextPath}/signup">
+    <a href="${pageContext.request.contextPath}/signin">
         <button style="font-size: 5mm">Sign in</button>
     </a>
 </th>

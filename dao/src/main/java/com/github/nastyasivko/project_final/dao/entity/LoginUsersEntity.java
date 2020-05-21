@@ -10,7 +10,7 @@ public class LoginUsersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_login",unique = true)
+    @Column(name = "user_login", unique = true)
     private String login;
     @Column
     private String password;
@@ -27,11 +27,13 @@ public class LoginUsersEntity {
             inverseJoinColumns = {@JoinColumn(name = "room_id")})
     private List<HotelRoomEntity> hotelRoomEntities = new ArrayList<>();
 
-    public LoginUsersEntity(Long id, String login, String password, Long userId) {
+    public LoginUsersEntity(Long id, String login, String password, UserEntity userEntity) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.userId = userId;
+    }
+
+    public LoginUsersEntity() {
     }
 
     public Long getId() {
@@ -64,6 +66,14 @@ public class LoginUsersEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
 

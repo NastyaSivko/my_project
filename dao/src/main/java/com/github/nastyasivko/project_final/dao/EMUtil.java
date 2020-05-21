@@ -9,15 +9,15 @@ import javax.persistence.Persistence;
 public class EMUtil {
     private static EntityManagerFactory emFactory = null;
 
-    public static EntityManager getEntityManager() {
+    public static EntityManager getEntityManager(String name) {
         if (emFactory == null) {
-            emFactory = Persistence.createEntityManagerFactory("project");
+            emFactory = Persistence.createEntityManagerFactory(name);
         }
         return emFactory.createEntityManager();
     }
 
-    public static Session getSession() {
-        return getEntityManager().unwrap(Session.class);
+    public static Session getSession(String name) {
+        return getEntityManager(name).unwrap(Session.class);
     }
 
     public static void closeEMFactory() {

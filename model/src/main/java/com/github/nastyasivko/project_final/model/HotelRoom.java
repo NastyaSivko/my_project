@@ -6,7 +6,7 @@ public class HotelRoom {
     private int beds;
     private int numberRoom;
 
-    public HotelRoom(String name,int beds,int numberRoom) {
+    public HotelRoom(String name, int beds, Integer numberRoom) {
         this.name = name;
         this.beds = beds;
         this.numberRoom = numberRoom;

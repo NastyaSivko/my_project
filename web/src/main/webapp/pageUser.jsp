@@ -7,8 +7,8 @@
 <h3>
     <p style="color: crimson; font-size: 10mm" align="center">Добро пожаловать
        <c:choose>
-           <c:when test="${authUser.getName() != ''}">
-           ${authUser.getName()} !<br>
+           <c:when test="${authUser.getLogin() != ''}">
+           ${authUser.getLogin()} !<br>
            </c:when>
         <c:otherwise>
             !<br>
@@ -31,6 +31,7 @@
         </td>
     </tr>
 </table>
+<p style="color: mediumspringgreen; font-size: 5mm" align="center">${done}</p>
 <!--
 <form action="${pageContext.request.contextPath}/pageuser" method="post">
     <p align="center"> <label for="salary">Введите зарплату:</label>

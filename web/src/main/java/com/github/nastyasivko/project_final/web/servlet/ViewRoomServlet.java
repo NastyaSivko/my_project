@@ -13,6 +13,6 @@ import java.io.IOException;
 public class ViewRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WebUtils.forwardToJsp("viewroom", req, resp);
+        WebUtils.forwardToJsp("viewRoom", req, resp);
     }
 }

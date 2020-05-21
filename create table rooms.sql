@@ -1,4 +1,4 @@
-insert into schema_for_project_final.rooms (name, beds, number_room)
+insert into schema_for_project_final.rooms (name, listBeds, number_room)
 values ("standart",1,101),("family room",4,102),("standart",4,103),("family room",5,104),("standart",3,105),
        ("family room",3,106),("standart",1,107),("standart",2,108),("family room",4,109),("standart",2,110),
        ("standart",1,201),("family room",5,202),("family room",3,203),("standart",2,204),("standart",2,205),

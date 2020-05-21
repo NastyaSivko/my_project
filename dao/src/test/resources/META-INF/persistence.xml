@@ -11,6 +11,7 @@
         <class>com.github.nastyasivko.project_final.dao.entity.LoginUsersEntity</class>
         <class>com.github.nastyasivko.project_final.dao.entity.UserEntity</class>
         <class>com.github.nastyasivko.project_final.dao.entity.UserOrderEntity</class>
+        <class>com.github.nastyasivko.project_final.dao.entity.NewOrdersEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

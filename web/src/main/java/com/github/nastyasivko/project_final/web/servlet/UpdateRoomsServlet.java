@@ -14,6 +14,6 @@ public class UpdateRoomsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WebUtils.forwardToJsp("updaterooms", req, resp);
+        WebUtils.forwardToJsp("updateRooms", req, resp);
     }
 }

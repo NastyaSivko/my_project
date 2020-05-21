@@ -3,11 +3,12 @@ package com.github.nastyasivko.project_final.dao.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "orders_users")
-public class UserOrderEntity {
+@Table(name = "new_orders")
+public class NewOrdersEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
     @Column(name = "user_login")
     private String userlogin;
@@ -16,22 +17,14 @@ public class UserOrderEntity {
     @Column(name = "number_of_beds")
     private String numberOfBeds;
 
-    @OneToOne(mappedBy = "userOrderEntity", fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private ApprovedOrdersEntity ordersApproved;
-
-    @OneToOne(mappedBy = "userOrderEntity", fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private DeniedOrdersEntity ordersDenied;
-
-    public UserOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds){
+    public NewOrdersEntity(Long id, String userlogin, String nameRoom, String numberOfBeds){
         this.id = id;
         this.userlogin = userlogin;
         this.nameRoom = nameRoom;
         this.numberOfBeds = numberOfBeds;
     }
 
-    public UserOrderEntity() {
+    public NewOrdersEntity() {
     }
 
     public Long getId() {

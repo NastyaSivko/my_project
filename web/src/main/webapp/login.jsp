@@ -4,18 +4,21 @@
 
 
 <h3><p align="center">Регистрация:</p></h3>
-<form action="${pageContext.request.contextPath}/phone" method="post">
-    <p align="center"> <label for="name">Name</label>
-    <input id="name" type="text" name="name"><br/>
+<form action="${pageContext.request.contextPath}/login" method="post">
+    <p align="center"><label for="name">Name</label>
+        <input id="name" type="text" name="name"><br/>
 
-    <label for="surname">SurName</label>
-    <input id="surname" type="text" name="surname"><br/>
+        <label for="surname">SurName</label>
+        <input id="surname" type="text" name="surname"><br/>
 
-    <label for="phone">Login</label>
-    <input id="phone" type="text" name="phone"> <br/>
+        <label for="phone">Phone</label>
+        <input id="phone" type="text" name="phone"> <br/>
 
-    <label for="email">Password</label>
-    <input id="email" type="email" name="email"><br/>
-    <input style="margin-top: 2mm" type="submit" value="Сохранить"></p>
+        <label for="login">Login</label>
+        <input id="login" type="text" name="login"> <br/>
+
+        <label for="password">Password</label>
+        <input id="password" type="text" name="password"><br/>
+        <input style="margin-top: 2mm" type="submit" value="Сохранить"></p>
 </form>
 <p style="color: red; font-size: 5mm" align="center">${error}</p>

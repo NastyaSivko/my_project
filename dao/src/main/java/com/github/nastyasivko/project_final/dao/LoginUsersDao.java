@@ -4,6 +4,8 @@ import com.github.nastyasivko.project_final.model.LoginUsers;
 
 public interface LoginUsersDao {
 
-    LoginUsers findUser(String login);
+    LoginUsers findLoginUser(String nameDb, String login);
+
+    LoginUsers getLoginUserForUserId (String nameDb, Long id);
 
 }
