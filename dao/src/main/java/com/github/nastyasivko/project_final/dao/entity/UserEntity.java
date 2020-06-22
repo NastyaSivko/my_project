@@ -2,8 +2,9 @@ package com.github.nastyasivko.project_final.dao.entity;
 
 import javax.persistence.*;
 
+@Cacheable
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class UserEntity {
 
     @Id

@@ -10,20 +10,26 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @Entity
-@Table(name = "approved_orders")
+@Table(name = "approved_order")
 public class ApprovedOrdersEntity extends Orders {
 
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
     private Integer numberRoom;
-    private Integer cost;
 
-    public ApprovedOrdersEntity(Long id, Long idUserLogin, Answer answer, Integer numberRoom, Integer cost) {
-       super(id, idUserLogin);
-       this.answer = answer;
-       this.numberRoom = numberRoom;
-       this.cost = cost;
+    @ManyToOne
+    @JoinColumn(name = "cost_room")
+    private CostRoomsEntity costRoomsEntity;
+
+    public ApprovedOrdersEntity(Long id, Long userId, Answer answer, Integer numberRoom, CostRoomsEntity costRoomsEntity) {
+        super(id, userId);
+        this.answer = answer;
+        this.numberRoom = numberRoom;
+        this.costRoomsEntity = costRoomsEntity;
+    }
+
+    public ApprovedOrdersEntity() {
     }
 
     public Answer getAnswer() {
@@ -42,21 +48,21 @@ public class ApprovedOrdersEntity extends Orders {
         this.numberRoom = numberRoom;
     }
 
-    public Integer getCost() {
-        return cost;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
-    }
-
     @Override
     public String toString() {
-        return "ApprovedOrders{" +
-                "answer='" + answer + '\'' +
+        return "ApprovedOrdersEntity{" +
+                "answer=" + answer +
                 ", numberRoom=" + numberRoom +
-                ", cost=" + cost +
+                ", costRoomsEntity=" + costRoomsEntity +
                 '}';
+    }
+
+    public CostRoomsEntity getCostRoomsEntity() {
+        return costRoomsEntity;
+    }
+
+    public void setCostRoomsEntity(CostRoomsEntity costRoomsEntity) {
+        this.costRoomsEntity = costRoomsEntity;
     }
 
     @Override
@@ -65,13 +71,13 @@ public class ApprovedOrdersEntity extends Orders {
         if (!(o instanceof ApprovedOrdersEntity)) return false;
         if (!super.equals(o)) return false;
         ApprovedOrdersEntity that = (ApprovedOrdersEntity) o;
-        return answer.equals(that.answer) &&
-                numberRoom.equals(that.numberRoom) &&
-                cost.equals(that.cost);
+        return getAnswer() == that.getAnswer() &&
+                Objects.equals(getNumberRoom(), that.getNumberRoom()) &&
+                Objects.equals(getCostRoomsEntity(), that.getCostRoomsEntity());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), answer, numberRoom, cost);
+        return Objects.hash(super.hashCode(), getAnswer(), getNumberRoom(), getCostRoomsEntity());
     }
 }

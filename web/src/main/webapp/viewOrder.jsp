@@ -17,38 +17,47 @@
         <th style="font-size: 7mm">Тип номера</th>
         <th style="font-size: 7mm">Количество спальных мест</th>
         <th></th>
-        <th></th>
     </tr>
-    <c:forEach items="${orderList}" var="order">
-        <tr>
-            <th>${order.userLogin}</th>
-            <th>${order.nameRoom}</th>
-            <th>${order.beds}</th>
-            <th>
-                <button style="font-size: 5mm">Одобрить</button>
-            </th>
-            <th>
-                <button style="font-size: 5mm">Отказать</button>
-            </th>
-        </tr>
-    </c:forEach>
+        <c:forEach items="${orderList}" var="order">
+            <tr>
+                <form action="${pageContext.request.contextPath}/vieworder" method="post">
+                <th><input type="hidden" name="userLogin" value="${order.userLogin}">${order.userLogin}</th>
+                <th><input type="hidden" name="nameRoom" value="${order.nameRoom}">${order.nameRoom}</th>
+                <th><input type="hidden" name="bed" value="${order.beds}">${order.beds}</th>
+                <th>
+                    <input style="margin-top: 2mm" type="submit" value="Ответить на запрос">
+                </th>
+                </form>
+            </tr>
+        </c:forEach>
 </table>
 </p>
-<p style="color: darkblue; font-size: 20mm; margin-top: 10mm" align="center">
-    <c:if test="${currentPage != 1}">
-        <a href="${pageContext.request.contextPath}/vieworder?page=${currentPage - 1}"><button><span aria-hidden="true">&laquo;</span></button></a>
-    </c:if>
-<c:forEach begin="1" end="${pageCount}" var="i">
-    <c:choose>
-        <c:when test="${currentPage eq i}">
-            <button>${i}</button>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/vieworder?page=${i}"><button>${i}</button></a>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-<c:if test="${currentPage lt pageCount}">
-     <a href="${pageContext.request.contextPath}/vieworder?page=${currentPage + 1}"><button><span aria-hidden="true">&raquo;</span></button></a>
-</c:if>
-</p>
+<a>
+    <table>
+        <tr></tr>
+    </table>
+    <p style="color: darkblue; font-size: 20mm; margin-top: 10mm" align="center">
+        <c:if test="${currentPage != 1}">
+            <a href="${pageContext.request.contextPath}/vieworder?page=${currentPage - 1}">
+                <button><span aria-hidden="true">&laquo;</span></button>
+            </a>
+        </c:if>
+        <c:forEach begin="1" end="${pageCount}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <button>${i}</button>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/vieworder?page=${i}">
+                        <button>${i}</button>
+                    </a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:if test="${currentPage lt pageCount}">
+            <a href="${pageContext.request.contextPath}/vieworder?page=${currentPage + 1}">
+                <button><span aria-hidden="true">&raquo;</span></button>
+            </a>
+        </c:if>
+    </p>
+</a>

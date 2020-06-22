@@ -26,11 +26,9 @@ public class UserBuyServlet extends HttpServlet {
     final UserOrderDao userOrderDao = DefaultUserOrderDao.getInstance();
     final NewOrdersDao newOrdersDao = DefaultNewOrderDao.getInstance();
     final String name = "project";
-    //final List<String> listRooms = hotelDao.getNameRooms(name);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //req.getSession().getAttribute("authUser");
         List<Room> listRoom = hotelDao.getRoomBeds(name);
         req.setAttribute("listRooms", listRoom);
         WebUtils.forwardToJsp("userBuy", req, resp);

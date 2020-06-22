@@ -2,11 +2,9 @@ package com.github.nastyasivko.project_final.dao.impl;
 
 import com.github.nastyasivko.project_final.dao.EMUtil;
 import com.github.nastyasivko.project_final.dao.UserOrderDao;
-import com.github.nastyasivko.project_final.dao.entity.Orders;
 import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
 import com.github.nastyasivko.project_final.model.UserOrder;
 import org.hibernate.Session;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,4 +32,22 @@ public class TestDefaultUserOrderDao {
         session.getTransaction().commit();
     }
 
+    @Test
+    void testGetUserOrder(){
+        final Session session = EMUtil.getSession(name);
+        UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3");
+        long id = userOrderDao.saveUserOrder(name, userOrder);
+
+        UserOrder userOrderNew = userOrderDao.getUserOrder(name, userOrder);
+
+        assertEquals(userOrderNew.getId(), id);
+        assertEquals(userOrderNew.getUserLogin(), userOrder.getUserLogin());
+        assertEquals(userOrderNew.getNameRoom(), userOrder.getNameRoom());
+        assertEquals(userOrderNew.getBeds(), userOrder.getBeds());
+
+        UserOrderEntity userOrderEntity = session.get(UserOrderEntity.class, id);
+        session.getTransaction().begin();
+        session.delete(userOrderEntity);
+        session.getTransaction().commit();
+    }
 }

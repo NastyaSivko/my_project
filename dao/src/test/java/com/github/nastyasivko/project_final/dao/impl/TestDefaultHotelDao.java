@@ -21,11 +21,11 @@ public class TestDefaultHotelDao {
 
     @BeforeEach
     public void init(){
-        HotelRoomEntity roomStandartOne = new HotelRoomEntity(null, "standart", 2,101,null);
-        HotelRoomEntity roomStandartTwo = new HotelRoomEntity(null, "standart", 3,101,null);
-        HotelRoomEntity roomFamilyRoom = new HotelRoomEntity(null, "family room", 1,101,null);
-        HotelRoomEntity roomHoneyMoon = new HotelRoomEntity(null, "honeymoon", 4,101,null);
-        HotelRoomEntity roomSuite = new HotelRoomEntity(null, "suite", 2,101,null);
+        HotelRoomEntity roomStandartOne = new HotelRoomEntity(null, "standart", "2","101");
+        HotelRoomEntity roomStandartTwo = new HotelRoomEntity(null, "standart", "3","101");
+        HotelRoomEntity roomFamilyRoom = new HotelRoomEntity(null, "family room", "1","101");
+        HotelRoomEntity roomHoneyMoon = new HotelRoomEntity(null, "honeymoon", "4","101");
+        HotelRoomEntity roomSuite = new HotelRoomEntity(null, "suite", "2","101");
         Session session = EMUtil.getSession(name);
         session.getTransaction().begin();
         session.persist(roomStandartOne);

@@ -13,15 +13,18 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @Entity
-@Table(name = "denied_orders")
+@Table(name = "denied_order")
 public class DeniedOrdersEntity extends Orders {
 
     @Enumerated(EnumType.STRING)
     private Answer answer;
 
-    public DeniedOrdersEntity(Long id, Long idUserLogin, Answer answer) {
-        super(id, idUserLogin);
+    public DeniedOrdersEntity(Long id, Long userId, Answer answer) {
+        super(id, userId);
         this.answer = answer;
+    }
+
+    public DeniedOrdersEntity() {
     }
 
     public Answer getAnswer() {
@@ -38,11 +41,11 @@ public class DeniedOrdersEntity extends Orders {
         if (!(o instanceof DeniedOrdersEntity)) return false;
         if (!super.equals(o)) return false;
         DeniedOrdersEntity that = (DeniedOrdersEntity) o;
-        return answer.equals(that.answer);
+        return getAnswer() == that.getAnswer();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), answer);
+        return Objects.hash(super.hashCode(), getAnswer());
     }
 }

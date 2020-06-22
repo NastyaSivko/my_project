@@ -3,7 +3,7 @@ package com.github.nastyasivko.project_final.dao.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "new_orders")
+@Table(name = "new_order")
 public class NewOrdersEntity {
 
     @Id

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cost_rooms")
+@Table(name = "cost_room")
 public class CostRoomsEntity {
 
     @Id
@@ -16,12 +16,17 @@ public class CostRoomsEntity {
     private Long id;
 
     @OneToMany(mappedBy = "costRoomsEntity", cascade = CascadeType.ALL)
-    private List<HotelRoomEntity> hotelRooms = new ArrayList<>(0);
+    private List<ApprovedOrdersEntity> approvedOrdersEntities = new ArrayList<>(0);
 
     @Column
     private Integer cost;
 
     public CostRoomsEntity() {
+    }
+
+    public CostRoomsEntity(Long id, Integer cost) {
+        this.id = id;
+        this.cost = cost;
     }
 
     public Long getId() {
@@ -32,12 +37,12 @@ public class CostRoomsEntity {
         this.id = id;
     }
 
-    public List<HotelRoomEntity> getHotelRooms() {
-        return hotelRooms;
+    public List<ApprovedOrdersEntity> getApprovedOrdersEntities() {
+        return approvedOrdersEntities;
     }
 
-    public void setHotelRooms(List<HotelRoomEntity> hotelRooms) {
-        this.hotelRooms = hotelRooms;
+    public void setApprovedOrdersEntities(List<ApprovedOrdersEntity> hotelRooms) {
+        this.approvedOrdersEntities = approvedOrdersEntities;
     }
 
     public Integer getCost() {

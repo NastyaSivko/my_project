@@ -17,7 +17,7 @@ public class DefaultNewOrderDao implements NewOrdersDao {
     }
 
     @Override
-    public boolean saveNewOrder(String nameDb, UserOrder userOrder) {
+    public Long saveNewOrder(String nameDb, UserOrder userOrder) {
 
         final Session session = EMUtil.getSession(nameDb);
         NewOrdersEntity newOrdersEntity = NewOrderConverter.toEntity(userOrder);
@@ -26,6 +26,6 @@ public class DefaultNewOrderDao implements NewOrdersDao {
         session.persist(newOrdersEntity);
         session.getTransaction().commit();
 
-        return true;
+        return newOrdersEntity.getId();
     }
 }

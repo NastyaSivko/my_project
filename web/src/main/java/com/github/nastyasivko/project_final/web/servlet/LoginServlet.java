@@ -1,16 +1,12 @@
 package com.github.nastyasivko.project_final.web.servlet;
 
-import com.github.nastyasivko.project_final.dao.EMUtil;
-import com.github.nastyasivko.project_final.dao.LoginUsersDao;
 import com.github.nastyasivko.project_final.dao.UserDao;
-import com.github.nastyasivko.project_final.dao.impl.DefaultLoginUsersDao;
 import com.github.nastyasivko.project_final.dao.impl.DefaultUserDao;
 import com.github.nastyasivko.project_final.model.LoginUsers;
 import com.github.nastyasivko.project_final.model.Users;
 import com.github.nastyasivko.project_final.service.SecurityLoginUser;
 import com.github.nastyasivko.project_final.service.impl.SecurityLoginUsers;
 import com.github.nastyasivko.project_final.web.WebUtils;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

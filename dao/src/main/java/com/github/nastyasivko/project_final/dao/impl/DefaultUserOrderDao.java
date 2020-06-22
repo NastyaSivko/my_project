@@ -23,14 +23,24 @@ public class DefaultUserOrderDao implements UserOrderDao {
 
         final Session session = EMUtil.getSession(nameDb);
         UserOrderEntity userOrderEntity = UserOrderConverter.toEntity(userOrder);
-        Orders order = new Orders(null, null);
-
-        order.setUserOrderEntity(userOrderEntity);
 
         session.beginTransaction();
         session.persist(userOrderEntity);
         session.getTransaction().commit();
 
         return userOrderEntity.getId();
+    }
+    
+    @Override
+    public  UserOrder getUserOrder(String nameDb, UserOrder userOrder){
+        final Session session = EMUtil.getSession(nameDb);
+        session.getTransaction().begin();
+        UserOrderEntity userOrderEntity = (UserOrderEntity) session.createQuery("select n from UserOrderEntity n where n.userlogin = :login and n.nameRoom = :room and n.numberOfBeds = :bed ")
+                .setParameter("login", userOrder.getUserLogin())
+                .setParameter("room", userOrder.getNameRoom())
+                .setParameter("bed", userOrder.getBeds())
+                .getSingleResult();
+        session.getTransaction().commit();
+        return UserOrderConverter.fromEntity(userOrderEntity);
     }
 }

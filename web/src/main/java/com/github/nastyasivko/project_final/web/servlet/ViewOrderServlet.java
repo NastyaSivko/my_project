@@ -22,23 +22,37 @@ public class ViewOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<UserOrder> userOrders = userAdministratorDao.getUsersOrders(name);
         int count = userOrders.size();
-        req.setAttribute("pageCount", ((count / 3) + 1));
-        int pageNumber;
-        try {
-         pageNumber = Integer.parseInt(req.getParameter("page"));
+        if (count % 3 == 0) {
+            req.setAttribute("pageCount", (count / 3));
+        } else {
+            req.setAttribute("pageCount", ((count / 3) + 1));
         }
-        catch (NumberFormatException e) {
+        int pageNumber;
+        if (req.getParameter("page") != null) {
+            pageNumber = Integer.parseInt(req.getParameter("page"));
+        } else {
             pageNumber = 1;
         }
         List<UserOrder> orderList = userAdministratorDao.getNewOrdersForPage(name, pageNumber);
-        if(orderList.size() == 0) {
+        if (orderList.size() == 0) {
             req.setAttribute("message", "Нет новых заказов");
             WebUtils.forwardToJsp("viewOrder", req, resp);
             return;
         }
         req.setAttribute("orderList", orderList);
-        req.setAttribute("currentPage",pageNumber);
+        req.setAttribute("currentPage", pageNumber);
         WebUtils.forwardToJsp("viewOrder", req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String userLogin = req.getParameter("userLogin");
+        String nameRoom = req.getParameter("nameRoom");
+        String bed = req.getParameter("bed");
+
+        UserOrder userOrder = new UserOrder(null, userLogin, nameRoom, bed);
+        req.getSession().setAttribute("userOrderAnswer", userOrder);
+
+        resp.sendRedirect("/hotel-kempinski/answerfororder");
+    }
 }

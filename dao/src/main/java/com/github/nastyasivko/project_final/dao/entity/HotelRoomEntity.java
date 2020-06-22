@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room")
 public class HotelRoomEntity {
 
     @Id
@@ -15,18 +15,14 @@ public class HotelRoomEntity {
     @Column
     private String name;
     @Column
-    private Integer beds;
+    private String beds;
     @Column(name = "number_room")
-    private Integer numberRoom;
-
-    @ManyToOne
-    @JoinColumn(name = "cost_room")
-    private CostRoomsEntity costRoomsEntity;
+    private String numberRoom;
 
     @ManyToMany(mappedBy = "hotelRoomEntities", cascade = CascadeType.ALL)
     private List<LoginUsersEntity> loginUsersEntities = new ArrayList<>();
 
-    public HotelRoomEntity(Long id, String name, Integer beds, Integer numberRoom, CostRoomsEntity costRoomsEntity) {
+    public HotelRoomEntity(Long id, String name, String beds, String numberRoom) {
         this.id = id;
         this.name = name;
         this.beds = beds;
@@ -52,27 +48,20 @@ public class HotelRoomEntity {
         this.name = name;
     }
 
-    public Integer getBeds() {
+    public String getBeds() {
         return beds;
     }
 
-    public void setBeds(Integer beds) {
+    public void setBeds(String beds) {
         this.beds = beds;
     }
 
-    public Integer getNumberRoom() {
+    public String getNumberRoom() {
         return numberRoom;
     }
 
-    public void setNumberRoom(Integer numberRoom) {
+    public void setNumberRoom(String numberRoom) {
         this.numberRoom = numberRoom;
     }
 
-    public CostRoomsEntity getCostRoomsEntity() {
-        return costRoomsEntity;
     }
-
-    public void setCostRoom(CostRoomsEntity costRoomsEntity) {
-        this.costRoomsEntity = costRoomsEntity;
-    }
-}

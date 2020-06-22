@@ -4,5 +4,5 @@ import com.github.nastyasivko.project_final.model.UserOrder;
 
 public interface NewOrdersDao {
 
-    boolean saveNewOrder(String nameDb,  UserOrder userOrder);
+    Long saveNewOrder(String nameDb,  UserOrder userOrder);
 }

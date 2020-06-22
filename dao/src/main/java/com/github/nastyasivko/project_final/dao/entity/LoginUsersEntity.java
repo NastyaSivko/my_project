@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Cacheable
 @Entity
-@Table(name = "login_users")
+@Table(name = "login_user")
 public class LoginUsersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

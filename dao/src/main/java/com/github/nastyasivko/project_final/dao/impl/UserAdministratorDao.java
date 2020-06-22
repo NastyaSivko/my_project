@@ -4,8 +4,9 @@ import com.github.nastyasivko.project_final.dao.AdministratorDao;
 import com.github.nastyasivko.project_final.dao.EMUtil;
 import com.github.nastyasivko.project_final.dao.converter.NewOrderConverter;
 import com.github.nastyasivko.project_final.dao.converter.UserOrderConverter;
-import com.github.nastyasivko.project_final.dao.entity.NewOrdersEntity;
-import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
+import com.github.nastyasivko.project_final.dao.entity.*;
+import com.github.nastyasivko.project_final.model.Answer;
+import com.github.nastyasivko.project_final.model.Costs;
 import com.github.nastyasivko.project_final.model.UserOrder;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -43,10 +44,15 @@ public class UserAdministratorDao implements AdministratorDao {
     }
 
     @Override
-    public boolean deleteNewOrders(String nameDb){
+    public boolean deleteNewOrders(String nameDb, UserOrder userOrder){
         Session session = EMUtil.getSession(nameDb);
         session.getTransaction().begin();
-        session.createQuery("delete from NewOrdersEntity ").executeUpdate();
+        List<NewOrdersEntity> order = session.createQuery("from NewOrdersEntity n where n.userlogin = :login and n.nameRoom = :room and n.numberOfBeds = :bed ")
+                .setParameter("login", userOrder.getUserLogin())
+                .setParameter("room", userOrder.getNameRoom())
+                .setParameter("bed", userOrder.getBeds())
+                .getResultList();
+        session.delete(order.get(0));
         session.getTransaction().commit();
         return true;
     }
@@ -74,5 +80,35 @@ public class UserAdministratorDao implements AdministratorDao {
         return query.setMaxResults(pageSize)
                 .setFirstResult((page - 1) * pageSize)
                 .getResultList();
+    }
+
+    @Override
+    public Long saveApprovedOrder(String nameDb, UserOrder userOrder, Integer numberRoom, Costs cost) {
+
+        final Session session = EMUtil.getSession(nameDb);
+        UserOrderEntity userOrderEntity = UserOrderConverter.toEntity(userOrder);
+        CostRoomsEntity costRoomsEntity = DefaultCostsDao.getInstance().getCost(nameDb, cost);
+        ApprovedOrdersEntity approvedOrdersEntity = new ApprovedOrdersEntity(null, userOrderEntity.getId(), Answer.YES, numberRoom, costRoomsEntity);
+
+        costRoomsEntity.getApprovedOrdersEntities().add(approvedOrdersEntity);
+
+        session.beginTransaction();
+        session.persist(approvedOrdersEntity);
+        session.getTransaction().commit();
+
+        return approvedOrdersEntity.getId();
+    }
+
+    @Override
+    public Long saveDeniedOrder(String nameDb, UserOrder userOrder){
+        final Session session = EMUtil.getSession(nameDb);
+        UserOrderEntity userOrderEntity = UserOrderConverter.toEntity(userOrder);
+        DeniedOrdersEntity deniedOrdersEntity = new DeniedOrdersEntity(null, userOrderEntity.getId(), Answer.NO);
+
+        session.beginTransaction();
+        session.persist(deniedOrdersEntity);
+        session.getTransaction().commit();
+
+        return deniedOrdersEntity.getId();
     }
 }
