@@ -1,31 +1,33 @@
 package com.github.nastyasivko.project_final.dao.impl;
 
-import com.github.nastyasivko.project_final.dao.EMUtil;
-import com.github.nastyasivko.project_final.dao.NewOrdersDao;
+import com.github.nastyasivko.project_final.dao.NewOrderDao;
+import com.github.nastyasivko.project_final.dao.converter.HotelRoomConverter;
 import com.github.nastyasivko.project_final.dao.converter.NewOrderConverter;
-import com.github.nastyasivko.project_final.dao.entity.NewOrdersEntity;
+import com.github.nastyasivko.project_final.dao.entity.NewOrderEntity;
+import com.github.nastyasivko.project_final.dao.repository.NewOrderRepository;
 import com.github.nastyasivko.project_final.model.UserOrder;
-import org.hibernate.Session;
 
-public class DefaultNewOrderDao implements NewOrdersDao {
-    private static class SingletonHolder {
-        static final NewOrdersDao HOLDER_INSTANCE = new DefaultNewOrderDao();
-    }
+import java.util.List;
 
-    public static NewOrdersDao getInstance() {
-        return DefaultNewOrderDao.SingletonHolder.HOLDER_INSTANCE;
+public class DefaultNewOrderDao implements NewOrderDao {
+    private final NewOrderRepository repository;
+
+    public DefaultNewOrderDao(NewOrderRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Long saveNewOrder(String nameDb, UserOrder userOrder) {
+    public Long saveNewOrder(UserOrder userOrder) {
+        NewOrderEntity newOrderEntity = NewOrderConverter.toEntity(userOrder);
 
-        final Session session = EMUtil.getSession(nameDb);
-        NewOrdersEntity newOrdersEntity = NewOrderConverter.toEntity(userOrder);
+        repository.save(newOrderEntity);
 
-        session.beginTransaction();
-        session.persist(newOrdersEntity);
-        session.getTransaction().commit();
+        return newOrderEntity.getId();
+    }
 
-        return newOrdersEntity.getId();
+    @Override
+    public UserOrder get(Long id){
+        NewOrderEntity newOrderEntity = repository.getOne(id);
+        return NewOrderConverter.fromEntity(newOrderEntity);
     }
 }

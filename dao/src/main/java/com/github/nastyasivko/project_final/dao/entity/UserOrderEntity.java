@@ -1,32 +1,39 @@
 package com.github.nastyasivko.project_final.dao.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "orders_user")
+@Table(name = "user_order")
 public class UserOrderEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_login")
+
     private String userlogin;
-    @Column(name = "name_room")
+
     private String nameRoom;
-    @Column(name = "number_of_beds")
+
     private String numberOfBeds;
 
-    public UserOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds){
+    private Date dateStart;
+
+    private Date dateEnd;
+
+    public UserOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds, Date dateStart, Date dateEnd) {
         this.id = id;
         this.userlogin = userlogin;
         this.nameRoom = nameRoom;
         this.numberOfBeds = numberOfBeds;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
     }
 
 
     public UserOrderEntity() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -35,6 +42,7 @@ public class UserOrderEntity {
         this.id = id;
     }
 
+    @Column(name = "user_login")
     public String getUserlogin() {
         return userlogin;
     }
@@ -43,6 +51,7 @@ public class UserOrderEntity {
         this.userlogin = userlogin;
     }
 
+    @Column(name = "name_room")
     public String getNameRoom() {
         return nameRoom;
     }
@@ -51,6 +60,7 @@ public class UserOrderEntity {
         this.nameRoom = nameRoom;
     }
 
+    @Column(name = "number_of_beds")
     public String getNumberOfBeds() {
         return numberOfBeds;
     }
@@ -59,4 +69,21 @@ public class UserOrderEntity {
         this.numberOfBeds = numberOfBeds;
     }
 
+    @Column(name = "date_start")
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    @Column(name = "date_end")
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
+    }
 }

@@ -1,53 +1,59 @@
 package com.github.nastyasivko.project_final.dao.impl;
 
-import com.github.nastyasivko.project_final.dao.EMUtil;
+
 import com.github.nastyasivko.project_final.dao.UserOrderDao;
-import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
+import com.github.nastyasivko.project_final.dao.config.DaoConfig;
 import com.github.nastyasivko.project_final.model.UserOrder;
-import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class TestDefaultUserOrderDao {
-    final UserOrderDao userOrderDao = DefaultUserOrderDao.getInstance();
-    final String name="project_test";
+    @Autowired
+    private UserOrderDao userOrderDao;
+
+    private final GregorianCalendar calendarStart = new GregorianCalendar();
+    private final GregorianCalendar calendarEnd = new GregorianCalendar();
 
     @Test
-    void testSaveUserOrder() {
-        final Session session = EMUtil.getSession(name);
-        UserOrder userOrder = new UserOrder(null, "user", "standart", "4");
-        long id = userOrderDao.saveUserOrder(name, userOrder);
+    void testSaveNewOrder() {
+        calendarStart.set(2020, 12, 05);
+        calendarEnd.set(2020,12,05);
+        UserOrder userOrder = new UserOrder(null, "test", "standart", "4", calendarStart.getTime(), calendarEnd.getTime());
 
-        UserOrderEntity userOrderEntity = session.get(UserOrderEntity.class, id);
+        Long id = userOrderDao.saveUserOrder(userOrder);
 
-        assertNotNull(userOrderEntity);
-        assertEquals(userOrderEntity.getUserlogin(), userOrder.getUserLogin());
-        assertEquals(userOrderEntity.getNameRoom(), userOrder.getNameRoom());
-        assertEquals(userOrderEntity.getNumberOfBeds(),userOrder.getBeds());
+        UserOrder orderFromEntity = userOrderDao.get(id);
 
-        session.getTransaction().begin();
-        session.delete(userOrderEntity);
-        session.getTransaction().commit();
+        assertNotNull(orderFromEntity);
+        assertEquals(orderFromEntity.getUserLogin(), userOrder.getUserLogin());
+        assertEquals(orderFromEntity.getNameRoom(), userOrder.getNameRoom());
+        assertEquals(orderFromEntity.getBeds(),userOrder.getBeds());
+        assertEquals(orderFromEntity.getDateStart(),userOrder.getDateStart());
+        assertEquals(orderFromEntity.getDateEnd(),userOrder.getDateEnd());
     }
 
     @Test
     void testGetUserOrder(){
-        final Session session = EMUtil.getSession(name);
-        UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3");
-        long id = userOrderDao.saveUserOrder(name, userOrder);
+        UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3", calendarStart.getTime(), calendarEnd.getTime());
+        long id = userOrderDao.saveUserOrder(userOrder);
 
-        UserOrder userOrderNew = userOrderDao.getUserOrder(name, userOrder);
+        UserOrder userOrderNew = userOrderDao.getUserOrder(userOrder);
 
         assertEquals(userOrderNew.getId(), id);
         assertEquals(userOrderNew.getUserLogin(), userOrder.getUserLogin());
         assertEquals(userOrderNew.getNameRoom(), userOrder.getNameRoom());
         assertEquals(userOrderNew.getBeds(), userOrder.getBeds());
-
-        UserOrderEntity userOrderEntity = session.get(UserOrderEntity.class, id);
-        session.getTransaction().begin();
-        session.delete(userOrderEntity);
-        session.getTransaction().commit();
     }
 }

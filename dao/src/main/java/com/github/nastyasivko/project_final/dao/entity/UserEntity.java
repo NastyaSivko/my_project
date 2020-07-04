@@ -7,21 +7,17 @@ import javax.persistence.*;
 @Table(name = "user")
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+
     private String name;
-    @Column
+
     private String surname;
-    @Column
+
     private String phone;
 
-    @OneToOne(mappedBy = "userEntity", fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private LoginUsersEntity loginUsersEntity;
+    private LoginUserEntity loginUserEntity;
 
-    public UserEntity(Long id, String name, String surname, String phone, LoginUsersEntity loginUsersEntity) {
+    public UserEntity(Long id, String name, String surname, String phone, LoginUserEntity loginUserEntity) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -31,6 +27,8 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -39,6 +37,7 @@ public class UserEntity {
         this.id = id;
     }
 
+    @Column
     public String getName() {
         return name;
     }
@@ -47,6 +46,7 @@ public class UserEntity {
         this.name = name;
     }
 
+    @Column
     public String getSurname() {
         return surname;
     }
@@ -55,6 +55,7 @@ public class UserEntity {
         this.surname = surname;
     }
 
+    @Column
     public String getPhone() {
         return phone;
     }
@@ -63,12 +64,14 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public LoginUsersEntity getLoginUsersEntity() {
-        return loginUsersEntity;
+    @OneToOne(mappedBy = "userEntity", fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    public LoginUserEntity getLoginUserEntity() {
+        return loginUserEntity;
     }
 
-    public void setLoginUsersEntity(LoginUsersEntity loginUsersEntity) {
-        this.loginUsersEntity = loginUsersEntity;
+    public void setLoginUserEntity(LoginUserEntity loginUserEntity) {
+        this.loginUserEntity = loginUserEntity;
     }
 
 }

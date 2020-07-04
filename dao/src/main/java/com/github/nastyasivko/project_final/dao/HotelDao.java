@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface HotelDao {
 
-    List<String> getNameRooms(String nameDb);
+    List<String> getNameRooms();
 
-    List<Room> getRoomBeds(String nameDb);
+    List<Room> getRoomBeds();
 }

@@ -13,6 +13,8 @@ public class UserOrderConverter {
         userOrderEntity.setUserlogin(userOrder.getUserLogin());
         userOrderEntity.setNameRoom(userOrder.getNameRoom());
         userOrderEntity.setNumberOfBeds(userOrder.getBeds());
+        userOrderEntity.setDateStart(userOrder.getDateStart());
+        userOrderEntity.setDateEnd(userOrder.getDateEnd());
         return userOrderEntity;
     }
 
@@ -24,6 +26,8 @@ public class UserOrderConverter {
                 userOrderEntity.getId(),
                 userOrderEntity.getUserlogin(),
                 userOrderEntity.getNameRoom(),
-                userOrderEntity.getNumberOfBeds());
+                userOrderEntity.getNumberOfBeds(),
+                userOrderEntity.getDateStart(),
+                userOrderEntity.getDateEnd());
     }
 }

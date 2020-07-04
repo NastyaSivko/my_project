@@ -1,10 +1,10 @@
 package com.github.nastyasivko.project_final.dao.converter;
 
 import com.github.nastyasivko.project_final.dao.entity.UserEntity;
-import com.github.nastyasivko.project_final.model.Users;
+import com.github.nastyasivko.project_final.model.User;
 
 public class UserConverter {
-    public static UserEntity toEntity(Users user) {
+    public static UserEntity toEntity(User user) {
         if (user == null) {
             return null;
         }
@@ -16,11 +16,11 @@ public class UserConverter {
         return userEntity;
     }
 
-    public static Users fromEntity(UserEntity userEntity) {
+    public static User fromEntity(UserEntity userEntity) {
         if (userEntity == null) {
             return null;
         }
-        return new Users(
+        return new User(
                 userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getSurname(),

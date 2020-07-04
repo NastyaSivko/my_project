@@ -2,14 +2,24 @@ package com.github.nastyasivko.project_final.model;
 
 public class HotelRoom {
 
+    private Long id;
     private String name;
-    private int beds;
-    private int numberRoom;
+    private String bed;
+    private String numberRoom;
 
-    public HotelRoom(String name, int beds, Integer numberRoom) {
+    public HotelRoom(Long id, String name, String bed, String numberRoom) {
+        this.id = id;
         this.name = name;
-        this.beds = beds;
+        this.bed = bed;
         this.numberRoom = numberRoom;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -20,19 +30,19 @@ public class HotelRoom {
         this.name = name;
     }
 
-    public int getBeds() {
-        return beds;
+    public String getBed() {
+        return bed;
     }
 
-    public void setBeds(int beds) {
-        this.beds = beds;
+    public void setBed(String bed) {
+        this.bed = bed;
     }
 
-    public int getNumberRoom() {
+    public String getNumberRoom() {
         return numberRoom;
     }
 
-    public void setNumberRoom(int numberRoom) {
+    public void setNumberRoom(String numberRoom) {
         this.numberRoom = numberRoom;
     }
 }

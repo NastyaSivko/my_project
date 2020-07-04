@@ -1,18 +1,24 @@
 package com.github.nastyasivko.project_final.model;
 
+import java.util.Date;
+
 public class AnswerUserOrder {
 
     private String userLogin;
     private String nameRoom;
     private String beds;
+    private Date dateStart;
+    private Date dateEnd;
     private Answer answer;
     private int numberRoom;
     private Integer cost;
 
-    public AnswerUserOrder(String userLogin, String nameRoom, String beds, Answer answer, int numberRoom, Integer cost) {
+    public AnswerUserOrder(String userLogin, String nameRoom, String beds, Date dateStart, Date dateEnd, Answer answer, int numberRoom, Integer cost) {
         this.userLogin = userLogin;
         this.nameRoom = nameRoom;
         this.beds = beds;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.answer = answer;
         this.numberRoom = numberRoom;
         this.cost = cost;
@@ -56,6 +62,22 @@ public class AnswerUserOrder {
 
     public void setNumberRoom(int numberRoom) {
         this.numberRoom = numberRoom;
+    }
+
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public Answer getAnswer() {

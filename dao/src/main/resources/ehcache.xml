@@ -5,11 +5,11 @@
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="200"
                   memoryStoreEvictionPolicy="LRU"/>
-    <cache name="com.github.nastyasivko.project_final.dao.entity.UserEntity"
+    <cache name="com.github.nastyasivko.project_final.dao.entity.LoginUserEntity"
            maxEntriesLocalHeap="2"
            eternal="true">
     </cache>
-    <cache name="com.github.nastyasivko.project_final.dao.entity.LoginUsersEntity"
+    <cache name="com.github.nastyasivko.project_final.dao.entity.UserEntity"
            maxEntriesLocalHeap="2"
            eternal="false"
            timeToIdleSeconds="300"

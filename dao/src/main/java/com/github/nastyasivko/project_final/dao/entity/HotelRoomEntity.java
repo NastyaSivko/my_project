@@ -8,30 +8,30 @@ import java.util.List;
 @Table(name = "room")
 public class HotelRoomEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
     private Long id;
-    @Column
+
     private String name;
-    @Column
-    private String beds;
-    @Column(name = "number_room")
+
+    private String bed;
+
     private String numberRoom;
 
     @ManyToMany(mappedBy = "hotelRoomEntities", cascade = CascadeType.ALL)
-    private List<LoginUsersEntity> loginUsersEntities = new ArrayList<>();
+    private List<LoginUserEntity> loginUsersEntities = new ArrayList<>();
 
-    public HotelRoomEntity(Long id, String name, String beds, String numberRoom) {
+    public HotelRoomEntity(Long id, String name, String bed, String numberRoom) {
         this.id = id;
         this.name = name;
-        this.beds = beds;
+        this.bed = bed;
         this.numberRoom = numberRoom;
     }
 
     public HotelRoomEntity() {
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     public Long getId() {
         return id;
     }
@@ -40,6 +40,7 @@ public class HotelRoomEntity {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -48,14 +49,16 @@ public class HotelRoomEntity {
         this.name = name;
     }
 
-    public String getBeds() {
-        return beds;
+    @Column(name = "bed")
+    public String getBed() {
+        return bed;
     }
 
-    public void setBeds(String beds) {
-        this.beds = beds;
+    public void setBed(String bed) {
+        this.bed = bed;
     }
 
+    @Column(name = "number_room")
     public String getNumberRoom() {
         return numberRoom;
     }
@@ -64,4 +67,4 @@ public class HotelRoomEntity {
         this.numberRoom = numberRoom;
     }
 
-    }
+}

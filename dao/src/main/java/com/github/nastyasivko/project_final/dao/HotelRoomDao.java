@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface HotelRoomDao {
 
-    boolean addElement(HotelRoom room);
-    boolean deleteElement(HotelRoom room);
-    boolean updateElement(HotelRoom room);
-    List<String> getNumberRoom(String nameDb, String nameRoom, String bed);
+    Long saveHotelRoom(HotelRoom room);
+    boolean deleteHotelRoom(HotelRoom room);
+    boolean updateHotelRoom(HotelRoom oldHotelRoom, String name, String bed, String numberRoom);
+    HotelRoom getHotelRoom(String numberRoom);
+    List<String> getNumberRoom(String nameRoom, String bed);
 }
