@@ -1,77 +1,68 @@
-create table approved_order
+create table schema_for_project_final.approved_order
 (
-  id         bigint auto_increment
+  id          bigint auto_increment
     primary key,
-  user_id    bigint       null,
-  answer     varchar(255) null,
-  numberRoom int          null,
-  cost_room  bigint       null,
-  constraint FKsoog5orp3cr4u265chi9o19a
-    foreign key (user_id) references orders_users (id),
-  constraint FKtndi681jqmaogaiwf1qj0ff8l
-    foreign key (cost_room) references cost_rooms (id)
+  date_end    varchar(255)  null,
+  date_start  varchar(255)  null,
+  user_id     bigint       null,
+  answer      varchar(255) null,
+  number_room int          null,
+  cost_room   bigint       null,
+  constraint FK1fpu8v9lq8kfhxgdw3ct8v721
+    foreign key (cost_room) references cost_room (id)
 );
-create table cost_room
+
+create table schema_for_project_final.cost_room
 (
   id   bigint auto_increment
     primary key,
   cost int null
 );
-create table denied_order
+
+create table schema_for_project_final.denied_order
 (
-  id      bigint auto_increment
+  id         bigint auto_increment
     primary key,
-  user_id bigint       null,
-  answer  varchar(255) null,
-  constraint FK1fd2t0g62hsw5nluh4pcpns0k
-    foreign key (user_id) references orders_users (id)
+  date_end   varchar(255)  null,
+  date_start varchar(255)  null,
+  user_id    bigint       null,
+  answer     varchar(255) null
 );
-create table login_user
+
+create table schema_for_project_final.login_user
 (
   id         bigint auto_increment
     primary key,
   user_login varchar(255) null,
   password   varchar(255) null,
   user_id    bigint       null,
-  constraint UK_hbtcs91ah0gpgj5eq72pr9xi7
+  constraint UK_707jx6ajfvluopkwb48s5dlpi
     unique (user_login),
-  constraint FKj952evru5ofpxnbylfs4hpr09
-    foreign key (user_id) references users (id)
+  constraint FKaap90j30ptnw1yxp8w4vp4slu
+    foreign key (user_id) references user (id)
 );
-create table new_order
+
+create table schema_for_project_final.new_order
 (
   id             bigint auto_increment
     primary key,
+  date_end       varchar(255)  null,
+  date_start     varchar(255)  null,
   name_room      varchar(255) null,
   number_of_beds varchar(255) null,
   user_login     varchar(255) null
 );
-create table order_user
-(
-  id             bigint auto_increment
-    primary key,
-  name_room      varchar(255) null,
-  number_of_beds varchar(255) null,
-  user_login     varchar(255) null
-);
-create table room
+
+create table schema_for_project_final.room
 (
   room_id     bigint auto_increment
     primary key,
-  beds        varchar(255) null,
+  bed         varchar(255) null,
   name        varchar(255) null,
   number_room varchar(255) null
 );
-create table user_order_room
-(
-  user_login bigint not null,
-  room_id    bigint not null,
-  constraint FKhaan6jlxkh978h8g8s17ei4om
-    foreign key (room_id) references rooms (room_id),
-  constraint FKsldkw1ta3qqnwvqabefysqgq9
-    foreign key (user_login) references login_users (id)
-);
-create table user
+
+create table schema_for_project_final.user
 (
   id      bigint auto_increment
     primary key,
@@ -80,7 +71,18 @@ create table user
   surname varchar(255) null
 );
 
-insert into schema_for_project_final.rooms (name, beds, number_room)
+create table schema_for_project_final.user_order
+(
+  id             bigint auto_increment
+    primary key,
+  date_end       varchar(255)  null,
+  date_start     varchar(255)  null,
+  name_room      varchar(255) null,
+  number_of_beds varchar(255) null,
+  user_login     varchar(255) null
+);
+
+insert into schema_for_project_final.room (name, bed, number_room)
 values ("standart",1,101),("family room",4,102),("standart",4,103),("family room",5,104),("standart",3,105),
        ("family room",3,106),("standart",1,107),("standart",2,108),("family room",4,109),("standart",2,110),
        ("standart",1,201),("family room",5,202),("family room",3,203),("standart",2,204),("standart",2,205),

@@ -19,7 +19,7 @@ public class DeniedOrderEntity extends Order {
 
     private Answer answer;
 
-    public DeniedOrderEntity(Long id, Long userId, Date dateStart, Date dateEnd, Answer answer) {
+    public DeniedOrderEntity(Long id, Long userId, String dateStart, String dateEnd, Answer answer) {
         super(id, userId, dateStart, dateEnd);
         this.answer = answer;
     }

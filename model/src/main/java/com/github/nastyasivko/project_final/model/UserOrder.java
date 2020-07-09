@@ -8,10 +8,10 @@ public class UserOrder {
     private String userLogin;
     private String nameRoom;
     private String beds;
-    private Date dateStart;
-    private Date dateEnd;
+    private String dateStart;
+    private String dateEnd;
 
-    public UserOrder(Long id, String userLogin, String nameRoom, String beds, Date dateStart, Date dateEnd) {
+    public UserOrder(Long id, String userLogin, String nameRoom, String beds, String dateStart, String dateEnd) {
         this.id = id;
         this.userLogin = userLogin;
         this.nameRoom = nameRoom;
@@ -54,19 +54,19 @@ public class UserOrder {
         this.beds = beds;
     }
 
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 }

@@ -23,6 +23,8 @@ public class DaoConfig {
     @Autowired
     private DeniedOrderRepository deniedOrderRepository;
     @Autowired
+    private HotelRoomPagingRepository hotelRoomPagingRepository;
+    @Autowired
     private HotelRoomRepository hotelRoomRepository;
     @Autowired
     private LoginUserRepository loginUserRepository;
@@ -41,7 +43,7 @@ public class DaoConfig {
     }
 
     @Bean
-    public HotelDao hotelDao(){return new DefaultHotelDao(hotelRoomRepository);}
+    public HotelDao hotelDao(){return new DefaultHotelDao(hotelRoomRepository, hotelRoomPagingRepository);}
 
     @Bean
     public UserAdministratorDao userAdministratorDao(){
@@ -50,7 +52,7 @@ public class DaoConfig {
 
     @Bean
     public HotelRoomDao hotelRoomDao() {
-        return new DefaultHotelRoomDao(hotelRoomRepository);
+        return new DefaultHotelRoomDao(hotelRoomRepository, approvedOrderRepository);
     }
 
     @Bean
@@ -70,6 +72,6 @@ public class DaoConfig {
 
     @Bean
     public UserDao userDao() {
-        return new DefaultUserDao(userRepository);
+        return new DefaultUserDao(userRepository, userOrderRepository, approvedOrderRepository, deniedOrderRepository);
     }
 }

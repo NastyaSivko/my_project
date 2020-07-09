@@ -24,14 +24,9 @@ public class TestDefaultNewOrderDao {
     @Autowired
     private NewOrderDao newOrderDao;
 
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
-
     @Test
     void testSaveNewOrder() {
-        calendarStart.set(2020, 12 - 1, 05);
-        calendarEnd.set(2020,12 - 1,07);
-        UserOrder userOrder = new UserOrder(null, "user", "standart", "4", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "4", "2020-10-07", "2020-10-10");
         Long id = newOrderDao.saveNewOrder(userOrder);
 
         UserOrder newOrderFromEntity = newOrderDao.get(1L);

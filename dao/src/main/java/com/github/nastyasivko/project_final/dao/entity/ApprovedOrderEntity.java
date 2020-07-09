@@ -20,11 +20,14 @@ public class ApprovedOrderEntity extends Order {
 
     private CostRoomEntity costRoomEntity;
 
-    public ApprovedOrderEntity(Long id, Long userId, Date dateStart, Date dateEnd, Answer answer, Integer numberRoom, CostRoomEntity costRoomEntity) {
+    private String payAnswer;
+
+    public ApprovedOrderEntity(Long id, Long userId, String dateStart, String dateEnd, Answer answer, Integer numberRoom, CostRoomEntity costRoomEntity, String payAnswer) {
         super(id, userId, dateStart, dateEnd);
         this.answer = answer;
         this.numberRoom = numberRoom;
         this.costRoomEntity = costRoomEntity;
+        this.payAnswer = payAnswer;
     }
 
     public ApprovedOrderEntity() {
@@ -58,12 +61,22 @@ public class ApprovedOrderEntity extends Order {
         this.costRoomEntity = costRoomEntity;
     }
 
+    @Column(name = "pay_answer")
+    public String getPayAnswer() {
+        return payAnswer;
+    }
+
+    public void setPayAnswer(String payAnswer) {
+        this.payAnswer = payAnswer;
+    }
+
     @Override
     public String toString() {
-        return "ApprovedOrdersEntity{" +
+        return "ApprovedOrderEntity{" +
                 "answer=" + answer +
                 ", numberRoom=" + numberRoom +
-                ", costRoomsEntity=" + costRoomEntity +
+                ", costRoomEntity=" + costRoomEntity +
+                ", payAnswer='" + payAnswer + '\'' +
                 '}';
     }
 
@@ -75,11 +88,12 @@ public class ApprovedOrderEntity extends Order {
         ApprovedOrderEntity that = (ApprovedOrderEntity) o;
         return getAnswer() == that.getAnswer() &&
                 Objects.equals(getNumberRoom(), that.getNumberRoom()) &&
-                Objects.equals(getCostRoomEntity(), that.getCostRoomEntity());
+                Objects.equals(getCostRoomEntity(), that.getCostRoomEntity()) &&
+                Objects.equals(getPayAnswer(), that.getPayAnswer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getAnswer(), getNumberRoom(), getCostRoomEntity());
+        return Objects.hash(super.hashCode(), getAnswer(), getNumberRoom(), getCostRoomEntity(), getPayAnswer());
     }
 }

@@ -26,10 +26,9 @@ public class WebConfig {
         this.daoConfig = daoConfig;
     }
 
-
     @Bean
-    public AdminController studentsController(){
-        return new AdminController(daoConfig.userAdministratorDao(), daoConfig.costDao(), daoConfig.hotelRoomDao(), daoConfig.userOrderDao());
+    public AdminController adminController(){
+        return new AdminController(daoConfig.userAdministratorDao(), daoConfig.costDao(), daoConfig.hotelRoomDao(), daoConfig.userOrderDao(), daoConfig.hotelDao());
     }
 
     @Bean
@@ -44,7 +43,7 @@ public class WebConfig {
 
     @Bean
     public LoginUserController loginUserController(){
-        return new LoginUserController(daoConfig.hotelDao(), daoConfig.userOrderDao(), daoConfig.newOrderDao());
+        return new LoginUserController(daoConfig.hotelDao(), daoConfig.userOrderDao(), daoConfig.newOrderDao(), daoConfig.userDao(), daoConfig.loginUserDao());
     }
 
     @Bean

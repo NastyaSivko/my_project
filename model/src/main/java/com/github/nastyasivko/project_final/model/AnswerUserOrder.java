@@ -1,19 +1,20 @@
 package com.github.nastyasivko.project_final.model;
 
-import java.util.Date;
-
 public class AnswerUserOrder {
 
+    private Long idUserOrder;
     private String userLogin;
     private String nameRoom;
     private String beds;
-    private Date dateStart;
-    private Date dateEnd;
+    private String dateStart;
+    private String dateEnd;
     private Answer answer;
     private int numberRoom;
     private Integer cost;
+    private String payAnswer;
 
-    public AnswerUserOrder(String userLogin, String nameRoom, String beds, Date dateStart, Date dateEnd, Answer answer, int numberRoom, Integer cost) {
+    public AnswerUserOrder(Long idUserOrder, String userLogin, String nameRoom, String beds, String dateStart, String dateEnd, Answer answer, int numberRoom, Integer cost, String payAnswer) {
+        this.idUserOrder = idUserOrder;
         this.userLogin = userLogin;
         this.nameRoom = nameRoom;
         this.beds = beds;
@@ -22,15 +23,25 @@ public class AnswerUserOrder {
         this.answer = answer;
         this.numberRoom = numberRoom;
         this.cost = cost;
+        this.payAnswer = payAnswer;
     }
 
-    public AnswerUserOrder(String userLogin, String nameRoom, String beds, Answer answer) {
+    public AnswerUserOrder(String userLogin, String nameRoom, String beds,  String dateStart, String dateEnd, Answer answer) {
         this.userLogin = userLogin;
         this.nameRoom = nameRoom;
         this.beds = beds;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.answer = answer;
     }
 
+    public Long getIdUserOrder() {
+        return idUserOrder;
+    }
+
+    public void setIdUserOrder(Long idUserOrder) {
+        this.idUserOrder = idUserOrder;
+    }
 
     public String getUserLogin() {
         return userLogin;
@@ -64,19 +75,19 @@ public class AnswerUserOrder {
         this.numberRoom = numberRoom;
     }
 
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -94,5 +105,13 @@ public class AnswerUserOrder {
 
     public void setCost(Integer cost) {
         this.cost = cost;
+    }
+
+    public String getPayAnswer() {
+        return payAnswer;
+    }
+
+    public void setPayAnswer(String payAnswer) {
+        this.payAnswer = payAnswer;
     }
 }

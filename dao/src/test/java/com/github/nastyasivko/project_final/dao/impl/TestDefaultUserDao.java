@@ -2,13 +2,17 @@ package com.github.nastyasivko.project_final.dao.impl;
 
 import com.github.nastyasivko.project_final.dao.*;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
+import com.github.nastyasivko.project_final.dao.entity.CostRoomEntity;
 import com.github.nastyasivko.project_final.model.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,6 +23,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TestDefaultUserDao {
     @Autowired
     private UserDao dao;
+
+    @Autowired
+    private CostDao costDao;
+
+    @Autowired
+    private UserAdministratorDao administratorDao;
+
+    @Autowired
+    private UserOrderDao userOrderDao;
 
     @Autowired
     private LoginUserDao loginDao;
@@ -43,34 +56,42 @@ public class TestDefaultUserDao {
         assertEquals(loginUserEntity.getPassword(), loginUser.getPassword());
     }
 
-//    @BeforeEach
-//    public void init() {
-//        Session session = EMUtil.getSession(name);
-//        session.getTransaction().begin();
-//        session.createQuery("DELETE UserOrderEntity ").executeUpdate();
-//        session.flush();
-//        session.clear();
-//        session.getTransaction().commit();
-//        UserOrder userOrderA = new UserOrder(null, "usertestorder", "standart", "4");
-//        UserOrder userOrderD = new UserOrder(null, "usertestorder", "standartroom", "5");
-//        userOrderDao.saveUserOrder(name, userOrderA);
-//        userOrderDao.saveUserOrder(name, userOrderD);
-//        session.getTransaction().begin();
-//        session.persist(new CostRoomEntity(null, 200));
-//        session.getTransaction().commit();
-//
-//        UserOrder userOrderFromDbA = userOrderDao.getUserOrder(name, new UserOrder(null, userOrderA.getUserLogin(), userOrderA.getNameRoom(), userOrderA.getBeds()));
-//        UserOrder userOrderFromDbD = userOrderDao.getUserOrder(name, new UserOrder(null, userOrderD.getUserLogin(), userOrderD.getNameRoom(), userOrderD.getBeds()));
-//
-//        userAdmin.saveApprovedOrder(name, userOrderFromDbA, 101, new Costs(null, 200));
-//        userAdmin.saveDeniedOrder(name, userOrderFromDbD);
-//    }
-//
-//
-//    @Test
-//    void testGetUserOrders() {
-//        List<AnswerUserOrder> userOrders = userDao.getUserOrders(name, "usertestorder");
-//
-//        assertNotNull(userOrders);
-//    }
+    @BeforeEach
+    public void init() {
+        UserOrder userOrderA = new UserOrder(null, "usertestorder", "standart", "4", "2020-10-07", "2020-11-11");
+        UserOrder userOrderD = new UserOrder(null, "usertestorder", "standartroom", "5","2020-10-07", "2020-10-11");
+        userOrderDao.saveUserOrder(userOrderA);
+        userOrderDao.saveUserOrder(userOrderD);
+        costDao.saveCost(new Cost(null, 2000));
+
+        UserOrder userOrderFromDbA = userOrderDao.getUserOrder(new UserOrder(null, userOrderA.getUserLogin(), userOrderA.getNameRoom(), userOrderA.getBeds(), userOrderA.getDateStart(), userOrderA.getDateEnd()));
+        UserOrder userOrderFromDbD = userOrderDao.getUserOrder(new UserOrder(null, userOrderD.getUserLogin(), userOrderD.getNameRoom(), userOrderD.getBeds(), userOrderD.getDateStart(), userOrderD.getDateEnd()));
+
+        administratorDao.saveApprovedOrder(userOrderFromDbA, 101, new Cost(null, 2000));
+        administratorDao.saveDeniedOrder(userOrderFromDbD);
+    }
+
+    @Test
+    void testGetAllUserOrder() {
+        List<UserOrder> orderList = dao.getAllUserOrder("usertestorder");
+
+        assertNotNull(orderList);
+    }
+
+    @Test
+    void testGetUserOrders() {
+        List<AnswerUserOrder> userOrders = dao.getUserOrders("usertestorder");
+
+        assertNotNull(userOrders);
+    }
+
+    @Test
+    void  testUpdateApprovedOrder(){
+        List<AnswerUserOrder> userOrders = dao.getUserOrders("usertestorder");
+
+        dao.updatePayAnswerOrder(userOrders.get(0));
+
+        List<AnswerUserOrder> userOrdersNew = dao.getUserOrders("usertestorder");
+        assertEquals(userOrdersNew.get(0).getPayAnswer(), "Pay");
+    }
 }

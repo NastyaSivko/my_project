@@ -51,7 +51,6 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
 
     @Override
     public boolean deleteNewOrders(UserOrder userOrder) {
-
         List<NewOrderEntity> order = repositoryNewOrder.findByUserloginAndNameRoomAndNumberOfBeds(userOrder.getUserLogin(), userOrder.getNameRoom(), userOrder.getBeds());
         repositoryNewOrder.delete(order.get(0));
         return true;
@@ -80,7 +79,7 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
 
         UserOrderEntity userOrderEntity = UserOrderConverter.toEntity(userOrder);
         CostRoomEntity costRoomEntity = repositoryCost.findByCost(cost.getCost());
-        ApprovedOrderEntity approvedOrderEntity = new ApprovedOrderEntity(null, userOrderEntity.getId(), userOrderEntity.getDateStart(), userOrderEntity.getDateEnd(), Answer.YES, numberRoom, costRoomEntity);
+        ApprovedOrderEntity approvedOrderEntity = new ApprovedOrderEntity(null, userOrderEntity.getId(), userOrderEntity.getDateStart(), userOrderEntity.getDateEnd(), Answer.YES, numberRoom, costRoomEntity, "Not pay");
 
         costRoomEntity.getApprovedOrdersEntities().add(approvedOrderEntity);
 

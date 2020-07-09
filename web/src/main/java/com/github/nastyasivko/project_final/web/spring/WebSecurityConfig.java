@@ -10,13 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/hotel-kempinski", "/login", "/viewroom").permitAll()
-//                .antMatchers("/admin/*").hasRole("ADMIN")
-//                .anyRequest().authenticated();
-//    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/login", "/signin", "/viewroom", "/", "/admin", "/pageuser").permitAll()
+                .antMatchers("/pageuser**").hasRole("USER")
+                .antMatchers("/admin**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and().logout().logoutSuccessUrl("/");
+//                .and().formLogin().loginPage("/signin").permitAll();
+    }
 }

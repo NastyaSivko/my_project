@@ -26,9 +26,13 @@ public class HibernateConfig {
 
         final HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(datasourseSettings.getUrl());
-        hikariDataSource.setUsername(datasourseSettings.getUser());
+        hikariDataSource.setUsername("root");
         hikariDataSource.setPassword(datasourseSettings.getPassword());
         hikariDataSource.setDriverClassName(datasourseSettings.getDriver());
+//        hikariDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/schema_for_project_final?createDatabaseIfNotExist=true&logger=com.mysql.cj.log.Slf4JLogger&profileSQL=true&useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false&characterEncoding=utf8");
+//        hikariDataSource.setUsername("root");
+//        hikariDataSource.setPassword("admin");
+//        hikariDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         hikariDataSource.setMaximumPoolSize(20);
         return hikariDataSource;
     }

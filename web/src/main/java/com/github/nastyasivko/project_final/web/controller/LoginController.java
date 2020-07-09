@@ -10,13 +10,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping
+@RequestMapping("/login")
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
@@ -29,16 +30,12 @@ public class LoginController {
         this.userDao = userDao;
     }
 
-//    @GetMapping("/login")
-//    public String login() {
-//        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
-//            return "login";
-//        }
-//        return "pageUser";
-//    }
+    @GetMapping()
+    public String login() {
+        return "login";
+    }
 
-    @PostMapping(value = "/login")
+    @PostMapping()
     public String login(HttpServletRequest rq) {
         String nameUser = rq.getParameter("name");
         String surname = rq.getParameter("surname");
@@ -70,10 +67,8 @@ public class LoginController {
         userDao.saveLoginUser(newUser, newLoginUser);
 
         log.info("user {}{} save", newUser.getName(), newLoginUser.getLogin());
-        Authentication auth = new UsernamePasswordAuthenticationToken(newUser, null);
-        SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return "redirect:/signIn";
+        return "signIn";
     }
 
 }

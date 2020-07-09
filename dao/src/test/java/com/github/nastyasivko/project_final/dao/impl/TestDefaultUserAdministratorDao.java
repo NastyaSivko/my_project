@@ -42,19 +42,13 @@ public class TestDefaultUserAdministratorDao {
     @Autowired
     private UserAdministratorDao adminDao;
 
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
-
-
     @BeforeEach
     public void init() {
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020, 12, 05);
-        newOrderDao.saveNewOrder(new UserOrder(null, "user", "standart", "2", calendarStart.getTime(), calendarEnd.getTime()));
-        newOrderDao.saveNewOrder(new UserOrder(null, "usertest", "standart", "6", calendarStart.getTime(), calendarEnd.getTime()));
-        newOrderDao.saveNewOrder(new UserOrder(null, "testuser", "suite", "1", calendarStart.getTime(), calendarEnd.getTime()));
-        newOrderDao.saveNewOrder(new UserOrder(null, "user", "honeymoom suite", "3", calendarStart.getTime(), calendarEnd.getTime()));
-        newOrderDao.saveNewOrder(new UserOrder(null, "usertest", "suite", "2", calendarStart.getTime(), calendarEnd.getTime()));
+        newOrderDao.saveNewOrder(new UserOrder(null, "user", "standart", "2", "2020-10-07", "2020-10-10"));
+        newOrderDao.saveNewOrder(new UserOrder(null, "usertest", "standart", "6", "2020-10-07", "2020-10-10"));
+        newOrderDao.saveNewOrder(new UserOrder(null, "testuser", "suite", "1", "2020-10-07", "2020-10-10"));
+        newOrderDao.saveNewOrder(new UserOrder(null, "user", "honeymoom suite", "3", "2020-10-07", "2020-10-10"));
+        newOrderDao.saveNewOrder(new UserOrder(null, "usertest", "suite", "2", "2020-10-07", "2020-10-10"));
     }
 
     @Test
@@ -66,7 +60,7 @@ public class TestDefaultUserAdministratorDao {
 
     @Test
     void testDeleteNewOrders() {
-        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-07", "2020-10-10");
         boolean result = adminDao.deleteNewOrders(userOrder);
 
         assertTrue(result);
@@ -81,7 +75,7 @@ public class TestDefaultUserAdministratorDao {
 
     @Test
     void testApprovedOrder() {
-        UserOrder userOrder = new UserOrder(null, "usertest", "standart", "4", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "usertest", "standart", "4","2020-10-07", "2020-10-10");
         userOrderDao.saveUserOrder(userOrder);
         Cost cost = new Cost(null, 1000);
 
@@ -96,7 +90,7 @@ public class TestDefaultUserAdministratorDao {
 
     @Test
     void testDeniedOrder() {
-        UserOrder userOrder = new UserOrder(null, "usertest", "standartroom", "4", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "usertest", "standartroom", "4", "2020-10-07", "2020-10-10");
         userOrderDao.saveUserOrder(userOrder);
 
         UserOrder userOrderFromDb = userOrderDao.getUserOrder(new UserOrder(null, userOrder.getUserLogin(), userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd()));

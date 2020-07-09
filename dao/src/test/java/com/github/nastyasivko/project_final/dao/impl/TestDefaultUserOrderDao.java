@@ -23,14 +23,9 @@ public class TestDefaultUserOrderDao {
     @Autowired
     private UserOrderDao userOrderDao;
 
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
-
     @Test
     void testSaveNewOrder() {
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
-        UserOrder userOrder = new UserOrder(null, "test", "standart", "4", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "test", "standart", "4", "2020-10-07", "2020-10-10");
 
         Long id = userOrderDao.saveUserOrder(userOrder);
 
@@ -46,7 +41,7 @@ public class TestDefaultUserOrderDao {
 
     @Test
     void testGetUserOrder(){
-        UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3", calendarStart.getTime(), calendarEnd.getTime());
+        UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3", "2020-10-07", "2020-10-10");
         long id = userOrderDao.saveUserOrder(userOrder);
 
         UserOrder userOrderNew = userOrderDao.getUserOrder(userOrder);
@@ -55,5 +50,7 @@ public class TestDefaultUserOrderDao {
         assertEquals(userOrderNew.getUserLogin(), userOrder.getUserLogin());
         assertEquals(userOrderNew.getNameRoom(), userOrder.getNameRoom());
         assertEquals(userOrderNew.getBeds(), userOrder.getBeds());
+        assertEquals(userOrderNew.getDateStart(), userOrder.getDateStart());
+        assertEquals(userOrderNew.getDateEnd(), userOrder.getDateEnd());
     }
 }

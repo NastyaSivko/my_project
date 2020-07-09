@@ -3,25 +3,26 @@ package com.github.nastyasivko.project_final.dao.entity;
 import javax.persistence.*;
 import java.util.Date;
 
+@Cacheable
 @Entity
 @Table(name = "user_order")
 public class UserOrderEntity {
 
     private Long id;
 
-    private String userlogin;
+    private String userLogin;
 
     private String nameRoom;
 
     private String numberOfBeds;
 
-    private Date dateStart;
+    private String dateStart;
 
-    private Date dateEnd;
+    private String dateEnd;
 
-    public UserOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds, Date dateStart, Date dateEnd) {
+    public UserOrderEntity(Long id, String userLogin, String nameRoom, String numberOfBeds, String dateStart, String dateEnd) {
         this.id = id;
-        this.userlogin = userlogin;
+        this.userLogin = userLogin;
         this.nameRoom = nameRoom;
         this.numberOfBeds = numberOfBeds;
         this.dateStart = dateStart;
@@ -43,12 +44,12 @@ public class UserOrderEntity {
     }
 
     @Column(name = "user_login")
-    public String getUserlogin() {
-        return userlogin;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserlogin(String userlogin) {
-        this.userlogin = userlogin;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     @Column(name = "name_room")
@@ -70,20 +71,20 @@ public class UserOrderEntity {
     }
 
     @Column(name = "date_start")
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
     @Column(name = "date_end")
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 }

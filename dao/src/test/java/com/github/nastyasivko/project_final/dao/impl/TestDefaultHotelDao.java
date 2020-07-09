@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration(classes = DaoConfig.class)
 @Transactional
 public class TestDefaultHotelDao {
+    public static final int PAGE_FOR_ROOM = 1;
 
     @Autowired
     private HotelRoomDao dao;
@@ -36,7 +37,6 @@ public class TestDefaultHotelDao {
         HotelRoom roomFamilyRoom = new HotelRoom(null, "family room", "1","101");
         HotelRoom roomHoneyMoon = new HotelRoom(null, "honeymoon", "4","101");
         HotelRoom roomSuite = new HotelRoom(null, "suite", "2","101");
-        dao.saveHotelRoom(roomStandartOne);
         dao.saveHotelRoom(roomStandartOne);
         dao.saveHotelRoom(roomStandartTwo);
         dao.saveHotelRoom(roomHoneyMoon);
@@ -59,4 +59,28 @@ public class TestDefaultHotelDao {
        assertNotNull(listRoom);
        assertEquals(listRoom.size(),4);
     }
+
+    @Test
+    void testGetNumberRoom(){
+
+        List<String> listRooms = hotelDao.getNameRooms();
+
+        assertNotNull(listRooms);
+    }
+
+    @Test
+    void testGetPage() {
+        List<HotelRoom> list = hotelDao.getRoomForPage(PAGE_FOR_ROOM);
+
+        assertEquals(list.size(), 5);
+    }
+
+    @Test
+    void testGetAllRooms(){
+
+        List<HotelRoom> hotelRooms = hotelDao.getAllRoom();
+
+        assertNotNull(hotelRooms);
+    }
+
 }

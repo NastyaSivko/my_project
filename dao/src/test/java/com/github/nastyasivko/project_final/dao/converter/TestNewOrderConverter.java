@@ -10,10 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestNewOrderConverter {
-
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
-
     @Test
     void fromEntityNull() {
         final UserOrder userOrder = NewOrderConverter.fromEntity(null);
@@ -23,14 +19,12 @@ public class TestNewOrderConverter {
     @Test
     void fromEntityNotNull() {
         final NewOrderEntity newOrderEntity = new NewOrderEntity();
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
         newOrderEntity.setId(1L);
         newOrderEntity.setUserlogin("user");
         newOrderEntity.setNameRoom("standart");
         newOrderEntity.setNumberOfBeds("1");
-        newOrderEntity.setDateStart(calendarStart.getTime());
-        newOrderEntity.setDateStart(calendarEnd.getTime());
+        newOrderEntity.setDateStart("2020-10-07");
+        newOrderEntity.setDateStart("2020-10-10");
 
         final UserOrder userOrder = NewOrderConverter.fromEntity(newOrderEntity);
 
@@ -51,9 +45,7 @@ public class TestNewOrderConverter {
 
     @Test
     void toEntityNotNull() {
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
-        final UserOrder userOrder = new UserOrder(1L, "user", "standart", "3", calendarStart.getTime(), calendarEnd.getTime());
+        final UserOrder userOrder = new UserOrder(1L, "user", "standart", "3", "2020-10-07", "2020-10-10");
 
         final NewOrderEntity newOrderEntity = NewOrderConverter.toEntity(userOrder);
 

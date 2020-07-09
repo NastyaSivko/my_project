@@ -33,8 +33,8 @@ public class DefaultLoginUserDao implements LoginUserDao {
     }
 
     @Override
-    public void updatePassword(Long authUserId, String newPassword) {
-        repository.updatePassword(authUserId, newPassword);
+    public void updatePassword(String login, String newPassword) {
+        repository.updatePassword(login, newPassword);
     }
 
     @Override

@@ -4,7 +4,7 @@
           version="2.0">
     <footer class="newFooter">
         <div class="footer">
-            <h2>Hotel Kempinski</h2>
+            <p align="center" style="color: blueviolet; font-size: 5mm"><spring:message code="page.footer"/></p>
         </div>
     </footer>
 

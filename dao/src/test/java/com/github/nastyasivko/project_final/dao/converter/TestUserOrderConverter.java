@@ -9,10 +9,7 @@ import java.util.GregorianCalendar;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestUserOrderComverter {
-
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
+public class TestUserOrderConverter {
 
     @Test
     void fromEntityNull() {
@@ -23,20 +20,18 @@ public class TestUserOrderComverter {
     @Test
     void fromEntityNotNull() {
         final UserOrderEntity userOrderEntity = new UserOrderEntity();
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
         userOrderEntity.setId(1L);
-        userOrderEntity.setUserlogin("user");
+        userOrderEntity.setUserLogin("user");
         userOrderEntity.setNameRoom("standart");
         userOrderEntity.setNumberOfBeds("1");
-        userOrderEntity.setDateStart(calendarStart.getTime());
-        userOrderEntity.setDateStart(calendarEnd.getTime());
+        userOrderEntity.setDateStart("2020-10-07");
+        userOrderEntity.setDateStart("2020-10-10");
 
         final UserOrder userOrder = UserOrderConverter.fromEntity(userOrderEntity);
 
         assertNotNull(userOrder);
         assertEquals(userOrder.getId(), userOrderEntity.getId());
-        assertEquals(userOrder.getUserLogin(), userOrderEntity.getUserlogin());
+        assertEquals(userOrder.getUserLogin(), userOrderEntity.getUserLogin());
         assertEquals(userOrder.getNameRoom(), userOrderEntity.getNameRoom());
         assertEquals(userOrder.getBeds(), userOrderEntity.getNumberOfBeds());
         assertEquals(userOrder.getDateStart(), userOrderEntity.getDateStart());
@@ -51,15 +46,13 @@ public class TestUserOrderComverter {
 
     @Test
     void toEntityNotNull() {
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
-        final UserOrder userOrder = new UserOrder(1L, "user", "standart", "3", calendarStart.getTime(), calendarEnd.getTime());
+        final UserOrder userOrder = new UserOrder(1L, "user", "standart", "3", "2020-10-07", "2020-10-10");
 
         final UserOrderEntity userOrderEntity = UserOrderConverter.toEntity(userOrder);
 
         assertNotNull(userOrderEntity);
         assertEquals(userOrder.getId(), userOrderEntity.getId());
-        assertEquals(userOrder.getUserLogin(), userOrderEntity.getUserlogin());
+        assertEquals(userOrder.getUserLogin(), userOrderEntity.getUserLogin());
         assertEquals(userOrder.getNameRoom(), userOrderEntity.getNameRoom());
         assertEquals(userOrder.getBeds(), userOrderEntity.getNumberOfBeds());
         assertEquals(userOrder.getDateStart(), userOrderEntity.getDateStart());

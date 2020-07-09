@@ -1,7 +1,11 @@
 package com.github.nastyasivko.project_final.dao.impl;
 
+import com.github.nastyasivko.project_final.dao.CostDao;
 import com.github.nastyasivko.project_final.dao.HotelRoomDao;
+import com.github.nastyasivko.project_final.dao.UserAdministratorDao;
+import com.github.nastyasivko.project_final.dao.UserOrderDao;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
+import com.github.nastyasivko.project_final.model.Cost;
 import com.github.nastyasivko.project_final.model.HotelRoom;
 import com.github.nastyasivko.project_final.model.UserOrder;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +26,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 public class TestDefaultHotelRoomDao {
 
-    public static final int NUMBER_ZERO = 0;
-
     @Autowired
     private HotelRoomDao dao;
+    @Autowired
+    private UserOrderDao userOrderDao;
+    @Autowired
+    private CostDao costDao;
+    @Autowired
+    private UserAdministratorDao administratorDao;
 
-    private final GregorianCalendar calendarStart = new GregorianCalendar();
-    private final GregorianCalendar calendarEnd = new GregorianCalendar();
 
     @BeforeEach
     void init() {
@@ -37,6 +43,16 @@ public class TestDefaultHotelRoomDao {
         dao.saveHotelRoom(new HotelRoom(null, "standart", "3", "103"));
         dao.saveHotelRoom(new HotelRoom(null, "standart", "2", "302"));
         dao.saveHotelRoom(new HotelRoom(null, "honeymoon suite", "2", "110"));
+
+        UserOrder userOrderNew = new UserOrder(null, "usertest", "standart", "2","2020-10-07", "2020-10-10");
+        userOrderDao.saveUserOrder(userOrderNew);
+        Cost cost = new Cost(null, 1000);
+
+        costDao.saveCost(new Cost(null, cost.getCost()));
+
+        UserOrder userOrderFromDb = userOrderDao.getUserOrder(new UserOrder(null, userOrderNew.getUserLogin(), userOrderNew.getNameRoom(), userOrderNew.getBeds(), userOrderNew.getDateStart(), userOrderNew.getDateEnd()));
+
+        Long id = administratorDao.saveApprovedOrder(userOrderFromDb, 101, cost);
     }
 
     @Test
@@ -52,26 +68,15 @@ public class TestDefaultHotelRoomDao {
         assertEquals(hotelRoom.getNumberRoom(), hotelRoomFromEntity.getNumberRoom());
     }
 
-
-//    @Test
-//    void testDeleteHotelRoom() {
-//        HotelRoom hotelRoom = new HotelRoom(null, "room", "5", "22222");
-//        long id = dao.saveHotelRoom(hotelRoom);
-//        final boolean resultDelete = dao.deleteHotelRoom(hotelRoom);
-//
-//        assertNotNull(id);
-//        assertTrue(resultDelete);
-//    }
-
     @Test
     void testUpdateHotelRoom() {
         HotelRoom hotelRoom = new HotelRoom(null, "room", "5", "333333");
         final long id = dao.saveHotelRoom(hotelRoom);
-        final boolean resultUpdate = dao.updateHotelRoom(hotelRoom, "new", "1", null);
-        final HotelRoom newRoom = dao.getHotelRoom("333333");
+        HotelRoom hotelRoomNew = dao.getHotelRoom("333333");
+        dao.updateHotelRoom(hotelRoomNew, "new", "1", "3");
+        final HotelRoom newRoom = dao.getHotelRoom("3");
 
         assertNotNull(id);
-        assertTrue(resultUpdate);
         assertEquals("new", newRoom.getName());
         assertEquals("1", newRoom.getBed());
     }
@@ -80,11 +85,10 @@ public class TestDefaultHotelRoomDao {
     void testUpdateHotelRoomNameNull() {
         HotelRoom hotelRoom = new HotelRoom(null, "room", "5", "1");
         final long id = dao.saveHotelRoom(hotelRoom);
-        final boolean resultUpdate = dao.updateHotelRoom(hotelRoom, null, "1", null);
+        dao.updateHotelRoom(hotelRoom, "", "1", "");
         final HotelRoom newRoom = dao.getHotelRoom("1");
 
         assertNotNull(id);
-        assertTrue(resultUpdate);
         assertEquals(hotelRoom.getName(), newRoom.getName());
         assertEquals(hotelRoom.getNumberRoom(), newRoom.getNumberRoom());
     }
@@ -93,11 +97,10 @@ public class TestDefaultHotelRoomDao {
     void testUpdateHotelRoomAllNull() {
         HotelRoom hotelRoom = new HotelRoom(null, "room", "5", "3");
         final long id = dao.saveHotelRoom(hotelRoom);
-        final boolean resultUpdate = dao.updateHotelRoom(hotelRoom, null, null, null);
+        dao.updateHotelRoom(hotelRoom, "", "", "");
         final HotelRoom newRoom = dao.getHotelRoom("3");
 
         assertNotNull(id);
-        assertTrue(resultUpdate);
         assertEquals(hotelRoom.getName(), newRoom.getName());
         assertEquals(hotelRoom.getBed(), newRoom.getBed());
         assertEquals(hotelRoom.getNumberRoom(), newRoom.getNumberRoom());
@@ -117,19 +120,57 @@ public class TestDefaultHotelRoomDao {
     }
 
     @Test
-    void getNumberRoomExist() {
-        calendarStart.set(2020, 12, 05);
-        calendarEnd.set(2020,12,05);
-        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", calendarStart.getTime(), calendarEnd.getTime());
-        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds());
+    void getNumberRoomExistOne() {
+        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-06", "2020-10-10");
 
-        assertNotNull(numberRoom);
+
+        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+
+        for(int i = 0; i < numberRoom.size(); i++){
+        System.out.println(numberRoom.get(i));}
+        assertEquals(numberRoom.get(0), "302");
+    }
+
+    @Test
+    void getNumberRoomExistTwo() {
+        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-06", "2020-10-07");
+
+
+        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+
+        for(int i = 0; i < numberRoom.size(); i++){
+            System.out.println(numberRoom.get(i));}
+        assertEquals(numberRoom.size(), 2);
+    }
+
+    @Test
+    void getNumberRoomExistThree() {
+        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-10", "2020-10-17");
+
+
+        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+
+        for(int i = 0; i < numberRoom.size(); i++){
+            System.out.println(numberRoom.get(i));}
+        assertEquals(numberRoom.size(), 2);
+    }
+
+    @Test
+    void getNumberRoomExistFour() {
+        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-11", "2020-10-13");
+
+
+        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+
+        for(int i = 0; i < numberRoom.size(); i++){
+            System.out.println(numberRoom.get(i));}
+        assertEquals(numberRoom.size(), 2);
     }
 
     @Test
     void getNumberRoomNotExist() {
-        UserOrder userOrder = new UserOrder(null,"user", "presidential suite", "2", calendarStart.getTime(), calendarEnd.getTime());
-        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds());
+        UserOrder userOrder = new UserOrder(null,"user", "presidential suite", "2", "2020-10-07", "2020-10-10");
+        List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
         System.out.println(numberRoom);
 
         assertEquals(numberRoom.size(),0);

@@ -10,5 +10,5 @@ public interface LoginUserDao {
 
     LoginUser get(Long id);
 
-    void updatePassword(Long loginUserId, String newPassword);
+    void updatePassword(String login, String newPassword);
 }

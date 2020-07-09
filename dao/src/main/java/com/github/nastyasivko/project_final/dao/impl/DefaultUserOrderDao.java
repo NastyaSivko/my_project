@@ -6,6 +6,8 @@ import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
 import com.github.nastyasivko.project_final.dao.repository.UserOrderRepository;
 import com.github.nastyasivko.project_final.model.UserOrder;
 
+import java.util.List;
+
 public class DefaultUserOrderDao implements UserOrderDao {
 
     private final UserOrderRepository repository;
@@ -32,7 +34,7 @@ public class DefaultUserOrderDao implements UserOrderDao {
 
     @Override
     public UserOrder getUserOrder(UserOrder userOrder) {
-        UserOrderEntity userOrderEntity = repository.findByUserloginAndNameRoomAndNumberOfBeds(userOrder.getUserLogin(), userOrder.getNameRoom(), userOrder.getBeds());
-        return UserOrderConverter.fromEntity(userOrderEntity);
+        List<UserOrderEntity> userOrderEntity = repository.findByUserLoginAndNameRoomAndNumberOfBedsAndDateStartAndDateEnd(userOrder.getUserLogin(), userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+        return UserOrderConverter.fromEntity(userOrderEntity.get(0));
     }
 }

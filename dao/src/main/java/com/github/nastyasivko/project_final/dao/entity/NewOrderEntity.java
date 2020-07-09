@@ -15,11 +15,11 @@ public class NewOrderEntity {
 
     private String numberOfBeds;
 
-    private Date dateStart;
+    private String dateStart;
 
-    private Date dateEnd;
+    private String dateEnd;
 
-    public NewOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds, Date dateStart, Date dateEnd) {
+    public NewOrderEntity(Long id, String userlogin, String nameRoom, String numberOfBeds, String dateStart, String dateEnd) {
         this.id = id;
         this.userlogin = userlogin;
         this.nameRoom = nameRoom;
@@ -70,20 +70,20 @@ public class NewOrderEntity {
     }
 
     @Column(name = "date_start")
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
     @Column(name = "date_end")
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 }

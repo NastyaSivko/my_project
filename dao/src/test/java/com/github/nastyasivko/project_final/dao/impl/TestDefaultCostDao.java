@@ -25,7 +25,6 @@ public class TestDefaultCostDao {
     @Autowired
     private CostDao dao;
 
-
     @BeforeEach
     public void init(){
         dao.saveCost(new Cost(null, 15));

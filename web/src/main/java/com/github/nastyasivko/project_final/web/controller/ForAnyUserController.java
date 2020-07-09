@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 
 @Controller
@@ -16,21 +17,21 @@ public class ForAnyUserController {
 
     private final SecurityLoginUser securityLoginUser;
 
-    public ForAnyUserController(SecurityLoginUser securityLoginUser){
+    public ForAnyUserController(SecurityLoginUser securityLoginUser) {
         this.securityLoginUser = securityLoginUser;
     }
 
     @GetMapping("/")
-    public String startPage(){
-        return "redirect:/index";
+    public String startPage() {
+        return "index";
     }
 
-    @GetMapping(value = "/viewroom")
-    public String getForoRoom(HttpServletRequest rq){
+    @GetMapping("/viewroom")
+    public String getForRoom() {
         return "viewRoom";
     }
 
-    @GetMapping(value = "/logout")
+    @GetMapping("/logout")
     public String doGet(HttpServletRequest rq) {
         SecurityContextHolder.clearContext();
         try {

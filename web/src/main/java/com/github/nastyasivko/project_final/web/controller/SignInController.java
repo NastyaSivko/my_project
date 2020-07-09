@@ -3,11 +3,13 @@ package com.github.nastyasivko.project_final.web.controller;
 
 import com.github.nastyasivko.project_final.dao.LoginUserDao;
 import com.github.nastyasivko.project_final.model.LoginUser;
+import com.github.nastyasivko.project_final.model.Role;
 import com.github.nastyasivko.project_final.service.SecurityLoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -30,46 +34,58 @@ public class SignInController {
         this.loginUserDao = loginUserDao;
     }
 
-    @GetMapping(value = "/signin")
-    public String login() {
+    @GetMapping("/signin")
+    public String pageSignIn(HttpServletRequest rq) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
-            return "signin";
+            return "signIn";
+        }
+        LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
+        if(user.getLogin().equals("admin")) {
+            return "admin";
         }
         return "pageUser";
     }
 
-    @PostMapping(value = "/signin")
+    @PostMapping("/signin")
     public String login(HttpServletRequest rq) {
         String login = rq.getParameter("login");
         String password = rq.getParameter("password");
         if(login.equals("admin") && password.equals("admin")) {
-            rq.getSession().setAttribute("authUser", new LoginUser(null, login, password, null));
+            rq.getSession().setAttribute("authUser", new LoginUser(login, password, Role.ADMIN));
+            Authentication auth = new UsernamePasswordAuthenticationToken(new LoginUser(login, password, Role.ADMIN), null, getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
             return "admin";
         }
 
         LoginUser user = loginUserDao.findLoginUser(login);
+        user.setRole(Role.USER);
 
         if (login.equals("") && password.equals("")){
             return "signIn";
         }
 
         if (user == null){
-            rq.setAttribute("error", "Вы не зарегистрировались");
+            rq.setAttribute("error", "You don't sign up");
             return "signIn";
         } else {
             if
             (!user.getPassword().equals(password)){
-                rq.setAttribute("error", "Неправильный пароль");
+                rq.setAttribute("error", "Wrong password");
                 return "signIn";
             } else {
                 log.info("user {}{} logged", user.getLogin());
                 rq.getSession().setAttribute("authUser", user);
-                Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
+                Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
                 return "pageUser";
             }
         }
+    }
+
+    private List<GrantedAuthority> getAuthorities() {
+        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER",
+                (GrantedAuthority) () -> "ROLE_ADMIN");
     }
 }

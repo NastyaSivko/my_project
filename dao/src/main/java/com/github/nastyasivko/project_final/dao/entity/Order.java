@@ -16,11 +16,11 @@ public class Order {
 
     private Long idUserOrder;
 
-    private Date dateStart;
+    private String dateStart;
 
-    private Date dateEnd;
+    private String dateEnd;
 
-    public Order(Long id, Long idUserOrder, Date dateStart, Date dateEnd) {
+    public Order(Long id, Long idUserOrder, String dateStart, String dateEnd) {
         this.id = id;
         this.idUserOrder = idUserOrder;
         this.dateStart = dateStart;
@@ -50,20 +50,20 @@ public class Order {
     }
 
     @Column(name = "date_start")
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
     @Column(name = "date_end")
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 

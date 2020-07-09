@@ -7,13 +7,9 @@
 
 
     <header class="clearfix">
-        <h2>Header</h2>
-        <h2><spring:message code="page.title"/></h2>
-        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru" style="padding: 5px">RU</a>
-        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en" style="padding: 5px">EN</a>
+        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru"><button style="font-size: 3.5mm; margin-right: 1mm; margin-bottom: 1mm">RU</button></a>
+        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en"><button style="font-size: 3.5mm">EN</button></a>
     </header>
-
-
 </jsp:root>
 
 

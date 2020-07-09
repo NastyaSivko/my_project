@@ -5,6 +5,10 @@ import com.github.nastyasivko.project_final.dao.entity.UserEntity;
 import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface UserOrderRepository extends JpaRepository<UserOrderEntity, Long> {
-    UserOrderEntity findByUserloginAndNameRoomAndNumberOfBeds(String userLogin, String numberRoom, String numberOfBeds);
+    List<UserOrderEntity> findByUserLoginAndNameRoomAndNumberOfBedsAndDateStartAndDateEnd(String userLogin, String numberRoom, String numberOfBeds, String dateStart, String dateEnd);
+
+    List<UserOrderEntity> findByUserLogin(String userLogin);
 }

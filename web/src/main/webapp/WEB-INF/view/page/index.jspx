@@ -4,10 +4,14 @@
           xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0" xmlns:spring="http://www.springframework.org/tags">
 
+
+    <p style="color:mediumspringgreen; font-size: 15mm;-webkit-text-stroke-width: 0.6mm; -webkit-text-stroke-color: green; margin-top: 10mm"
+       align="center">
+        <em><spring:message code="page.title"/></em>
+    </p>
     <p align="center">
         <img src="https://hotels.sletat.ru/i/f/66854_24.jpg" height="400 mm" vspace="0.1px"/>
     </p>
-    <!--<p align="center">-->
     <table align="center">
         <tr>
             <th>
@@ -27,6 +31,4 @@
             </th>
         </tr>
     </table>
-    <!--</p>-->
-
 </jsp:root>
