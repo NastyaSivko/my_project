@@ -26,7 +26,7 @@ public class AnswerUserOrder {
         this.payAnswer = payAnswer;
     }
 
-    public AnswerUserOrder(String userLogin, String nameRoom, String beds,  String dateStart, String dateEnd, Answer answer) {
+    public AnswerUserOrder(String userLogin, String nameRoom, String beds, String dateStart, String dateEnd, Answer answer) {
         this.userLogin = userLogin;
         this.nameRoom = nameRoom;
         this.beds = beds;

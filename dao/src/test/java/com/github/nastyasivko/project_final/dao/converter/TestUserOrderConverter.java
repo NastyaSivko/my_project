@@ -4,8 +4,6 @@ import com.github.nastyasivko.project_final.dao.entity.UserOrderEntity;
 import com.github.nastyasivko.project_final.model.UserOrder;
 import org.junit.jupiter.api.Test;
 
-import java.util.GregorianCalendar;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -18,7 +18,7 @@ public class ServiceConfig {
     }
 
     @Bean
-    public SecurityLoginUser securityLoginUser(){
+    public SecurityLoginUser securityLoginUser() {
         return new DefaultSecurityLoginUser(daoConfig.loginUserDao());
     }
 }

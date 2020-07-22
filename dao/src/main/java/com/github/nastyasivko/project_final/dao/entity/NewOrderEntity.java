@@ -1,7 +1,6 @@
 package com.github.nastyasivko.project_final.dao.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "new_order")

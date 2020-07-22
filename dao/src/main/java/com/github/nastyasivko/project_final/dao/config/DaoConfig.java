@@ -43,11 +43,13 @@ public class DaoConfig {
     }
 
     @Bean
-    public HotelDao hotelDao(){return new DefaultHotelDao(hotelRoomRepository, hotelRoomPagingRepository);}
+    public HotelDao hotelDao() {
+        return new DefaultHotelDao(hotelRoomRepository, hotelRoomPagingRepository);
+    }
 
     @Bean
-    public UserAdministratorDao userAdministratorDao(){
-        return new DefaultUserAdministratorDao(costRepository, newOrderRepository, approvedOrderRepository, deniedOrderRepository, newOrderPagingRepository);
+    public UserAdministratorDao userAdministratorDao() {
+        return new DefaultUserAdministratorDao(costRepository, newOrderRepository, approvedOrderRepository, deniedOrderRepository, newOrderPagingRepository, userOrderRepository);
     }
 
     @Bean

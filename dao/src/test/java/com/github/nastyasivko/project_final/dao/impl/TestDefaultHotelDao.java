@@ -31,12 +31,12 @@ public class TestDefaultHotelDao {
     private HotelDao hotelDao;
 
     @BeforeEach
-    public void init(){
-        HotelRoom roomStandartOne = new HotelRoom(null, "standart", "2","101");
-        HotelRoom roomStandartTwo = new HotelRoom(null, "standart", "3","101");
-        HotelRoom roomFamilyRoom = new HotelRoom(null, "family room", "1","101");
-        HotelRoom roomHoneyMoon = new HotelRoom(null, "honeymoon", "4","101");
-        HotelRoom roomSuite = new HotelRoom(null, "suite", "2","101");
+    public void init() {
+        HotelRoom roomStandartOne = new HotelRoom(null, "standart", "2", "101");
+        HotelRoom roomStandartTwo = new HotelRoom(null, "standart", "3", "101");
+        HotelRoom roomFamilyRoom = new HotelRoom(null, "family room", "1", "101");
+        HotelRoom roomHoneyMoon = new HotelRoom(null, "honeymoon", "4", "101");
+        HotelRoom roomSuite = new HotelRoom(null, "suite", "2", "101");
         dao.saveHotelRoom(roomStandartOne);
         dao.saveHotelRoom(roomStandartTwo);
         dao.saveHotelRoom(roomHoneyMoon);
@@ -45,7 +45,7 @@ public class TestDefaultHotelDao {
     }
 
     @Test
-    void testGetListRooms(){
+    void testGetListRooms() {
 
         List<String> listRooms = hotelDao.getNameRooms();
 
@@ -53,15 +53,15 @@ public class TestDefaultHotelDao {
     }
 
     @Test
-    void testGetRoomBeds(){
-       List<Room> listRoom = hotelDao.getRoomBeds();
+    void testGetRoomBeds() {
+        List<Room> listRoom = hotelDao.getRoomBeds();
 
-       assertNotNull(listRoom);
-       assertEquals(listRoom.size(),4);
+        assertNotNull(listRoom);
+        assertEquals(listRoom.size(), 4);
     }
 
     @Test
-    void testGetNumberRoom(){
+    void testGetNumberRoom() {
 
         List<String> listRooms = hotelDao.getNameRooms();
 
@@ -76,7 +76,7 @@ public class TestDefaultHotelDao {
     }
 
     @Test
-    void testGetAllRooms(){
+    void testGetAllRooms() {
 
         List<HotelRoom> hotelRooms = hotelDao.getAllRoom();
 

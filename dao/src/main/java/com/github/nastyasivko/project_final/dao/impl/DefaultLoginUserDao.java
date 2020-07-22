@@ -35,6 +35,8 @@ public class DefaultLoginUserDao implements LoginUserDao {
     @Override
     public void updatePassword(String login, String newPassword) {
         repository.updatePassword(login, newPassword);
+        log.info("update user {} password, new password {}", login, newPassword);
+
     }
 
     @Override
@@ -44,7 +46,7 @@ public class DefaultLoginUserDao implements LoginUserDao {
     }
 
     @Override
-    public LoginUser getLoginUser (Long id){
+    public LoginUser getLoginUser(Long id) {
         LoginUserEntity loginUser;
         try {
             loginUser = repository.findByUserId(id).get();

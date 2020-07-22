@@ -1,11 +1,14 @@
 package com.github.nastyasivko.project_final.web.rq;
 
+import com.github.nastyasivko.project_final.model.Role;
+
 public class CreateLoginUserRq {
     private String name;
     private String surName;
     private String phone;
     private String login;
     private String password;
+    private Role role;
 
     public String getName() {
         return name;
@@ -45,5 +48,13 @@ public class CreateLoginUserRq {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

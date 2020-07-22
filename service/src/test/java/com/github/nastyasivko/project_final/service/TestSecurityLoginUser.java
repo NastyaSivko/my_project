@@ -27,11 +27,11 @@ public class TestSecurityLoginUser {
         assertTrue(result);
     }
 
-   @Test
+    @Test
     void testDublicateLoginExist() {
-       when(loginUserDao.findLoginUser("user")).thenReturn(new LoginUser(null, "user", "user", null));
-       boolean result = service.dublicateLogin("user");
-       assertFalse(result);
+        when(loginUserDao.findLoginUser("user")).thenReturn(new LoginUser(null, "user", "user", null));
+        boolean result = service.dublicateLogin("user");
+        assertFalse(result);
     }
 
 }

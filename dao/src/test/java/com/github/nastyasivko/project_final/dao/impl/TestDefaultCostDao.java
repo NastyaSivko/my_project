@@ -2,7 +2,6 @@ package com.github.nastyasivko.project_final.dao.impl;
 
 import com.github.nastyasivko.project_final.dao.CostDao;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
-import com.github.nastyasivko.project_final.dao.entity.CostRoomEntity;
 import com.github.nastyasivko.project_final.model.Cost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +25,14 @@ public class TestDefaultCostDao {
     private CostDao dao;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         dao.saveCost(new Cost(null, 15));
         dao.saveCost(new Cost(null, 20));
         dao.saveCost(new Cost(null, 3));
     }
 
     @Test
-    void  testSaveCost(){
+    void testSaveCost() {
         Cost cost = new Cost(null, 100);
         long id = dao.saveCost(cost);
         Cost newCost = dao.get(id);
@@ -44,14 +43,14 @@ public class TestDefaultCostDao {
     }
 
     @Test
-    void testGetListCosts(){
+    void testGetListCosts() {
         List<Cost> listCost = dao.getListCosts();
 
         assertNotNull(listCost);
     }
 
     @Test
-    void testGetCost(){
+    void testGetCost() {
         Cost cost = new Cost(null, 15);
         Cost newCost = dao.getCost(cost);
 

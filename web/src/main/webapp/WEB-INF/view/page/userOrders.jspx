@@ -11,7 +11,7 @@
 
 
     <p style="color: red; font-size: 5mm" align="center">${noanswer}</p>
-
+    <c:if test="${noanswer eq null}">
     <p align="center" style="color: green; font-size: 10mm">My orders:</p>
     <table border="3" cellspacing="0" cellpadding="20" width="700"
            style="color: darkblue; margin-top: 10mm" align="center">
@@ -22,16 +22,19 @@
             <th style="font-size: 7mm">Date End</th>
         </tr>
         <c:forEach items="${allOrder}" var="order">
-                <tr>
-                    <th><input type="hidden" name="nameRoom" value="${order.nameRoom}"/>${order.nameRoom}</th>
-                    <th><input type="hidden" name="bed" value="${order.beds}"/>${order.beds}</th>
-                    <th><input type="hidden" name="dateStart" value="${order.dateStart}"/>${order.dateStart}
-                    </th>
-                    <th><input type="hidden" name="dateEnd" value="${order.dateEnd}"/>${order.dateEnd}</th>
-                </tr>
+            <tr>
+                <th><input type="hidden" name="nameRoom" value="${order.nameRoom}"/>${order.nameRoom}</th>
+                <th><input type="hidden" name="bed" value="${order.beds}"/>${order.beds}</th>
+                <th><input type="hidden" name="dateStart" value="${order.dateStart}"/>${order.dateStart}
+                </th>
+                <th><input type="hidden" name="dateEnd" value="${order.dateEnd}"/>${order.dateEnd}</th>
+            </tr>
         </c:forEach>
     </table>
+    </c:if>
     <a href="${pageContext.request.contextPath}/pageuser">
-       <p align="center"><button style="font-size: 5mm; margin-top: 5mm">Back</button></p>
+        <p align="center">
+            <button style="font-size: 5mm; margin-top: 5mm">Back</button>
+        </p>
     </a>
 </jsp:root>

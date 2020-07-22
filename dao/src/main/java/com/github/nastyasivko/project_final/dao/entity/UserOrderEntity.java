@@ -1,7 +1,6 @@
 package com.github.nastyasivko.project_final.dao.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Cacheable
 @Entity
@@ -28,7 +27,6 @@ public class UserOrderEntity {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
     }
-
 
     public UserOrderEntity() {
     }

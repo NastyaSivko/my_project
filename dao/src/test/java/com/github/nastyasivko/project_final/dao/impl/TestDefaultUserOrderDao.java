@@ -11,8 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.GregorianCalendar;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -34,13 +32,13 @@ public class TestDefaultUserOrderDao {
         assertNotNull(orderFromEntity);
         assertEquals(orderFromEntity.getUserLogin(), userOrder.getUserLogin());
         assertEquals(orderFromEntity.getNameRoom(), userOrder.getNameRoom());
-        assertEquals(orderFromEntity.getBeds(),userOrder.getBeds());
-        assertEquals(orderFromEntity.getDateStart(),userOrder.getDateStart());
-        assertEquals(orderFromEntity.getDateEnd(),userOrder.getDateEnd());
+        assertEquals(orderFromEntity.getBeds(), userOrder.getBeds());
+        assertEquals(orderFromEntity.getDateStart(), userOrder.getDateStart());
+        assertEquals(orderFromEntity.getDateEnd(), userOrder.getDateEnd());
     }
 
     @Test
-    void testGetUserOrder(){
+    void testGetUserOrder() {
         UserOrder userOrder = new UserOrder(null, "useruser", "standart", "3", "2020-10-07", "2020-10-10");
         long id = userOrderDao.saveUserOrder(userOrder);
 

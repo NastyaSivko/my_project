@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
@@ -36,15 +35,16 @@ public class LoginUserController {
 
     @GetMapping()
     public String startPage(HttpServletRequest rq) {
-      final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
             return "signIn";
         }
         LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
-        if(user.getLogin().equals("admin")) {
+        if (user.getLogin().equals("admin")) {
             return "admin";
         } else {
-            return "pageUser";}
+            return "pageUser";
+        }
     }
 
     @PostMapping()
@@ -123,19 +123,15 @@ public class LoginUserController {
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
             return "signIn";
         }
-        try {
-            LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
-            List<AnswerUserOrder> userOrders = userDao.getUserOrders(user.getLogin());
-            if (userOrders.size() == 0) {
-                rq.setAttribute("noanswer", "You order without answer. Please, try again later.");
-                return "userOrdersWithAnswer";
-            }
-            rq.setAttribute("userOrders", userOrders);
-            return "userOrdersWithAnswer";
-        } catch (NullPointerException e) {
-            rq.setAttribute("noanswer", "You don't sign in");
+
+        LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
+        List<AnswerUserOrder> userOrders = userDao.getUserOrders(user.getLogin());
+        if (userOrders.size() == 0) {
+            rq.setAttribute("noanswer", "You order without answer. Please, try again later.");
             return "userOrdersWithAnswer";
         }
+        rq.setAttribute("userOrders", userOrders);
+        return "userOrdersWithAnswer";
     }
 
     @PostMapping("/myorderwithanswer")

@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultHotelDao implements HotelDao {
     private static final Logger log = LoggerFactory.getLogger(DefaultLoginUserDao.class);
@@ -70,12 +71,10 @@ public class DefaultHotelDao implements HotelDao {
     }
 
     @Override
-    public List<HotelRoom> getAllRoom(){
+    public List<HotelRoom> getAllRoom() {
         List<HotelRoomEntity> hotelRoomEntities = repository.findAll();
-        List<HotelRoom> hotelRooms = new ArrayList<>();
-        for (int i = 0; i < hotelRoomEntities.size(); i++) {
-            hotelRooms.add(HotelRoomConverter.fromEntity(hotelRoomEntities.get(i)));
-        }
-        return hotelRooms;
+        return hotelRoomEntities.stream()
+                .map(HotelRoomConverter::fromEntity)
+                .collect(Collectors.toList());
     }
 }

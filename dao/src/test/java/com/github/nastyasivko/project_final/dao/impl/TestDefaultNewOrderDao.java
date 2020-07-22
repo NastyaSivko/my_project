@@ -2,17 +2,13 @@ package com.github.nastyasivko.project_final.dao.impl;
 
 import com.github.nastyasivko.project_final.dao.NewOrderDao;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
-import com.github.nastyasivko.project_final.dao.entity.NewOrderEntity;
 import com.github.nastyasivko.project_final.model.UserOrder;
-import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,8 +30,8 @@ public class TestDefaultNewOrderDao {
         assertNotNull(newOrderFromEntity);
         assertEquals(newOrderFromEntity.getUserLogin(), userOrder.getUserLogin());
         assertEquals(newOrderFromEntity.getNameRoom(), userOrder.getNameRoom());
-        assertEquals(newOrderFromEntity.getBeds(),userOrder.getBeds());
-        assertEquals(newOrderFromEntity.getDateStart(),userOrder.getDateStart());
-        assertEquals(newOrderFromEntity.getDateEnd(),userOrder.getDateEnd());
+        assertEquals(newOrderFromEntity.getBeds(), userOrder.getBeds());
+        assertEquals(newOrderFromEntity.getDateStart(), userOrder.getDateStart());
+        assertEquals(newOrderFromEntity.getDateEnd(), userOrder.getDateEnd());
     }
 }

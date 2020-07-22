@@ -18,6 +18,9 @@
     <definition name="answerForOrder" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/page/answerForOrder.jspx"/>
     </definition>
+    <definition name="approvedOrder" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/approvedOrder.jspx"/>
+    </definition>
     <definition name="login" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/page/login.jspx"/>
     </definition>

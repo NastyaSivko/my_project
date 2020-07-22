@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface DeniedOrderRepository  extends JpaRepository<DeniedOrderEntity, Long> {
+public interface DeniedOrderRepository extends JpaRepository<DeniedOrderEntity, Long> {
     List<DeniedOrderEntity> findByIdUserOrder(Long userId);
 }

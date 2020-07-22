@@ -5,23 +5,17 @@ import com.github.nastyasivko.project_final.dao.NewOrderDao;
 import com.github.nastyasivko.project_final.dao.UserAdministratorDao;
 import com.github.nastyasivko.project_final.dao.UserOrderDao;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
-import com.github.nastyasivko.project_final.dao.converter.NewOrderConverter;
-import com.github.nastyasivko.project_final.dao.entity.CostRoomEntity;
-import com.github.nastyasivko.project_final.dao.entity.NewOrderEntity;
+import com.github.nastyasivko.project_final.model.AnswerUserOrder;
 import com.github.nastyasivko.project_final.model.Cost;
 import com.github.nastyasivko.project_final.model.UserOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,6 +53,13 @@ public class TestDefaultUserAdministratorDao {
     }
 
     @Test
+    void testApprovedOrders() {
+        List<AnswerUserOrder> orderList = adminDao.getApprovedOrder();
+
+        assertNotNull(orderList);
+    }
+
+    @Test
     void testDeleteNewOrders() {
         UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-07", "2020-10-10");
         boolean result = adminDao.deleteNewOrders(userOrder);
@@ -75,7 +76,7 @@ public class TestDefaultUserAdministratorDao {
 
     @Test
     void testApprovedOrder() {
-        UserOrder userOrder = new UserOrder(null, "usertest", "standart", "4","2020-10-07", "2020-10-10");
+        UserOrder userOrder = new UserOrder(null, "usertest", "standart", "4", "2020-10-07", "2020-10-10");
         userOrderDao.saveUserOrder(userOrder);
         Cost cost = new Cost(null, 1000);
 

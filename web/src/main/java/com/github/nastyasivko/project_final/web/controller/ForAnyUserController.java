@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
 
 @Controller
 @RequestMapping
@@ -31,7 +29,7 @@ public class ForAnyUserController {
         return "viewRoom";
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/customlogout")
     public String doGet(HttpServletRequest rq) {
         SecurityContextHolder.clearContext();
         try {

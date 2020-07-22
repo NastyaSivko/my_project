@@ -20,7 +20,7 @@
         </c:choose>
     </p>
 
-    <p style="color: red; font-size: 5mm" align="center">${done}</p>
+    <p style="color: magenta; font-size: 5mm" align="center">${done}</p>
     <table align="center">
         <tr>
             <td>
@@ -55,7 +55,8 @@
                 <form action="${pageContext.request.contextPath}/pageuser" method="post">
                     <fieldset>
                         <legend>Update password</legend>
-                        <input style="margin-right: 2mm; margin-left: 2mm" type="hidden" name="oldPassword">My password: ${authUser.password} ; </input>
+                        <input style="margin-right: 2mm; margin-left: 2mm" type="hidden"
+                               name="oldPassword">My password: ${authUser.password} ; </input>
                         <label for="password" style="margin-right: 2mm; margin-left: 2mm">New password</label>
                         <input id="password" type="text" name="password"/>
                         <input type="submit" value="update"/>

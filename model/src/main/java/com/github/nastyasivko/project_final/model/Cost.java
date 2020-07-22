@@ -4,11 +4,11 @@ public class Cost {
     private Long id;
     private Integer cost;
 
-    public Cost(Long id, Integer cost){
+    public Cost(Long id, Integer cost) {
         this.id = id;
         this.cost = cost;
     }
-    
+
 
     public Long getId() {
         return id;

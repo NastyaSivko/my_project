@@ -4,8 +4,6 @@ import com.github.nastyasivko.project_final.dao.entity.NewOrderEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.awt.print.Pageable;
-
 public interface NewOrderPagingRepository extends PagingAndSortingRepository<NewOrderEntity, Long> {
-        Page<NewOrderEntity> findAll();
+    Page<NewOrderEntity> findAll();
 }

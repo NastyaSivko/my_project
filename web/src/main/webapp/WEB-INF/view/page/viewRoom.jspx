@@ -27,7 +27,8 @@
         </tr>
         <tr>
             <td valign="middle" align="center">
-                <img src="https://d1vp8nomjxwyf1.cloudfront.net/wp-content/uploads/sites/87/2017/02/17083556/Img3762x.jpg" height="350 mm"/>
+                <img src="https://d1vp8nomjxwyf1.cloudfront.net/wp-content/uploads/sites/87/2017/02/17083556/Img3762x.jpg"
+                     height="350 mm"/>
             </td>
             <td valign="middle" align="center">
                 <img src="https://s-ec.bstatic.com/images/hotel/max1024x768/772/77248771.jpg" height="350 mm"/>
@@ -73,5 +74,18 @@
         <a href="${pageContext.request.contextPath}/pageuser/userbuy">
             <button style="font-size: 5mm">Buy now</button>
         </a>
+
+
+        <c:if test="${authUser.getLogin() != ''}">
+            <a href="${pageContext.request.contextPath}/pageuser">
+                <button style="font-size: 5mm; margin-top: 5mm">Back page user</button>
+            </a>
+        </c:if>
+
+        <a href="${pageContext.request.contextPath}/">
+            <button style="font-size: 5mm; margin-top: 5mm">Back</button>
+        </a>
+
+
     </p>
 </jsp:root>

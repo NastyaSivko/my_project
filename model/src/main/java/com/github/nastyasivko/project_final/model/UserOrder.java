@@ -1,7 +1,5 @@
 package com.github.nastyasivko.project_final.model;
 
-import java.util.Date;
-
 public class UserOrder {
 
     private Long id;

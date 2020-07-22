@@ -7,7 +7,7 @@
     <a href="${pageContext.request.contextPath}/logout">
         <button style="font-size: 3.5mm"><spring:message code="page.out"/></button>
     </a>
-    <!--<p style="color: darkblue; font-size: 20mm; margin-top: 10mm" align="center">-->
+
     <table width="700px" style="color: darkblue" align="center">
         <tbody>
         <tr>
@@ -39,8 +39,11 @@
         </tbody>
 
     </table>
+
     <a href="${pageContext.request.contextPath}/pageuser">
-        <p align="center"><button style="font-size: 5mm; margin-top: 5mm">Back</button></p>
+        <p align="center">
+            <button style="font-size: 5mm; margin-top: 5mm">Back</button>
+        </p>
     </a>
     <p style="color: red; font-size: 5mm" align="center">${error}</p>
 </jsp:root>

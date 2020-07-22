@@ -43,7 +43,7 @@
             <button style="font-size: 5mm; margin-top: 5mm">Back</button>
         </p>
     </a>
-    <p style="color: red; font-size: 5mm" align="center">
+    <p style="color: chartreuse; font-size: 5mm" align="center">
         <c:if test="${message ne null}">&#10003;</c:if>${message}</p>
 
 </jsp:root>

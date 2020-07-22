@@ -4,17 +4,17 @@ import com.github.nastyasivko.project_final.dao.entity.NewOrderEntity;
 import com.github.nastyasivko.project_final.model.UserOrder;
 
 public class NewOrderConverter {
-    public static NewOrderEntity toEntity(UserOrder userOrder) {
-        if (userOrder == null) {
+    public static NewOrderEntity toEntity(UserOrder userNewOrder) {
+        if (userNewOrder == null) {
             return null;
         }
         final NewOrderEntity userOrderEntity = new NewOrderEntity();
-        userOrderEntity.setId(userOrder.getId());
-        userOrderEntity.setUserlogin(userOrder.getUserLogin());
-        userOrderEntity.setNameRoom(userOrder.getNameRoom());
-        userOrderEntity.setNumberOfBeds(userOrder.getBeds());
-        userOrderEntity.setDateStart(userOrder.getDateStart());
-        userOrderEntity.setDateEnd(userOrder.getDateEnd());
+        userOrderEntity.setId(userNewOrder.getId());
+        userOrderEntity.setUserlogin(userNewOrder.getUserLogin());
+        userOrderEntity.setNameRoom(userNewOrder.getNameRoom());
+        userOrderEntity.setNumberOfBeds(userNewOrder.getBeds());
+        userOrderEntity.setDateStart(userNewOrder.getDateStart());
+        userOrderEntity.setDateEnd(userNewOrder.getDateEnd());
         return userOrderEntity;
     }
 

@@ -1,7 +1,6 @@
 package com.github.nastyasivko.project_final.dao.repository;
 
 import com.github.nastyasivko.project_final.dao.entity.LoginUserEntity;
-import com.github.nastyasivko.project_final.model.LoginUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

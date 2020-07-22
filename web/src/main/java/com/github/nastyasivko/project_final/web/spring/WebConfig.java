@@ -27,46 +27,46 @@ public class WebConfig {
     }
 
     @Bean
-    public AdminController adminController(){
+    public AdminController adminController() {
         return new AdminController(daoConfig.userAdministratorDao(), daoConfig.costDao(), daoConfig.hotelRoomDao(), daoConfig.userOrderDao(), daoConfig.hotelDao());
     }
 
     @Bean
-    public ForAnyUserController forAnyUserController(){
+    public ForAnyUserController forAnyUserController() {
         return new ForAnyUserController(serviceConfig.securityLoginUser());
     }
 
     @Bean
-    public LoginController loginController(){
+    public LoginController loginController() {
         return new LoginController(serviceConfig.securityLoginUser(), daoConfig.userDao());
     }
 
     @Bean
-    public LoginUserController loginUserController(){
+    public LoginUserController loginUserController() {
         return new LoginUserController(daoConfig.hotelDao(), daoConfig.userOrderDao(), daoConfig.newOrderDao(), daoConfig.userDao(), daoConfig.loginUserDao());
     }
 
     @Bean
-    public SignInController signInController(){
+    public SignInController signInController() {
         return new SignInController(serviceConfig.securityLoginUser(), daoConfig.loginUserDao());
     }
 
     @Bean
-    public UrlBasedViewResolver tilesViewResolver(){
+    public UrlBasedViewResolver tilesViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setViewClass(TilesView.class);
         return resolver;
     }
 
     @Bean
-    public TilesConfigurer tilesConfigurer(){
+    public TilesConfigurer tilesConfigurer() {
         final TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
         return tilesConfigurer;
     }
 
     @Bean
-    public ReloadableResourceBundleMessageSource messageSource(){
+    public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
         source.setBasename("classpath:i18n/messages");
         source.setDefaultEncoding("UTF-8");
@@ -75,7 +75,7 @@ public class WebConfig {
     }
 
     @Bean
-    public CookieLocaleResolver localeResolver(){
+    public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setDefaultLocale(Locale.forLanguageTag("en"));
         resolver.setCookieName("LocaleCookie");

@@ -1,5 +1,6 @@
 package com.github.nastyasivko.project_final.dao.impl;
 
+import com.github.nastyasivko.project_final.dao.HotelRoomDao;
 import com.github.nastyasivko.project_final.dao.UserDao;
 import com.github.nastyasivko.project_final.dao.converter.LoginUserConverter;
 import com.github.nastyasivko.project_final.dao.converter.NewOrderConverter;
@@ -14,6 +15,7 @@ import com.github.nastyasivko.project_final.model.AnswerUserOrder;
 import com.github.nastyasivko.project_final.model.LoginUser;
 import com.github.nastyasivko.project_final.model.User;
 import com.github.nastyasivko.project_final.model.UserOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.nastyasivko.project_final.dao.impl.DefaultHotelRoomDao.*;
 import static java.lang.Integer.parseInt;
 
 public class DefaultUserDao implements UserDao {
@@ -38,6 +41,9 @@ public class DefaultUserDao implements UserDao {
         this.repositoryDenied = repositoryDenied;
     }
 
+    @Autowired
+    private HotelRoomDao hotelRoomDao;
+
     @Override
     public Long saveLoginUser(User user, LoginUser loginUser) {
         UserEntity userEntity = UserConverter.toEntity(user);
@@ -46,6 +52,7 @@ public class DefaultUserDao implements UserDao {
         loginUserEntity.setUserEntity(userEntity);
         userEntity.setLoginUserEntity(loginUserEntity);
         repository.save(userEntity);
+
         return userEntity.getId();
     }
 
@@ -56,7 +63,7 @@ public class DefaultUserDao implements UserDao {
     }
 
     @Override
-    public List<UserOrder> getAllUserOrder(String login){
+    public List<UserOrder> getAllUserOrder(String login) {
         List<UserOrderEntity> userOrderEntity = repositoryOrder.findByUserLogin(login);
         List<UserOrder> userOrders = new ArrayList<>();
         for (int i = 0; i < userOrderEntity.size(); i++) {
@@ -74,28 +81,25 @@ public class DefaultUserDao implements UserDao {
             List<ApprovedOrderEntity> userApprovedOrderEntity = repositoryApproved.findByIdUserOrder(id);
             int days = 0;
             if (userApprovedOrderEntity.size() != 0) {
-                String[] strStart;
-                String[] strEnd;
-                String delimetr = "-";
-                strStart = userApprovedOrderEntity.get(0).getDateStart().split(delimetr);
-                strEnd = userApprovedOrderEntity.get(0).getDateEnd().split(delimetr);
+                String[] strStart = hotelRoomDao.getArrayYearMonthDate(userApprovedOrderEntity.get(0).getDateStart());
+                String[] strEnd = hotelRoomDao.getArrayYearMonthDate(userApprovedOrderEntity.get(0).getDateEnd());
                 if (strStart[1].equals(strEnd[1])) {
                     days = parseInt(strEnd[2]) - parseInt(strStart[2]);
                 } else if (strStart[1].equals("12") || strStart[1].equals("01") || strStart[1].equals("03") || strStart[1].equals("05") || strStart[1].equals("07") || strStart[1].equals("08") || strStart[1].equals("10")) {
-                    int dayStart = 31 - parseInt(strStart[2]);
+                    int dayStart = DAYS_MONTH_NOT_THIRTY - parseInt(strStart[2]);
                     int dayEnd = parseInt(strEnd[2]) - 1;
                     days = dayStart + dayEnd;
                 } else if (strStart[1].equals("04") || strStart[1].equals("06") || strStart[1].equals("09") || strStart[1].equals("11")) {
-                    int dayStart = 30 - parseInt(strStart[2]);
+                    int dayStart = DAYS_MONTH_THIRTY - parseInt(strStart[2]);
                     int dayEnd = parseInt(strEnd[2]) - 1;
                     days = dayStart + dayEnd;
                 } else if (strStart[1].equals("02")) {
-                    if (parseInt(strStart[0]) % 4 == 0 && (parseInt(strStart[0]) % 100 != 0 || parseInt(strStart[0]) % 400 == 0)) {
-                        int dayStart = 29 - parseInt(strStart[2]);
+                    if (parseInt(strStart[0]) % 4 == 0 && (parseInt(strStart[0]) % NUMBER_HUNDRED != 0 || parseInt(strStart[0]) % NUMBER_FOUR_HUNDRED == 0)) {
+                        int dayStart = DAYS_FEB_LEAP_YEAR - parseInt(strStart[2]);
                         int dayEnd = parseInt(strEnd[2]) - 1;
                         days = dayStart + dayEnd;
                     } else {
-                        int dayStart = 28 - parseInt(strStart[2]);
+                        int dayStart = DAYS_FEB_NOT_LEAP_YEAR - parseInt(strStart[2]);
                         int dayEnd = parseInt(strEnd[2]) - 1;
                         days = dayStart + dayEnd;
                     }
@@ -117,7 +121,7 @@ public class DefaultUserDao implements UserDao {
     }
 
     @Override
-    public void updatePayAnswerOrder(AnswerUserOrder answerUserOrder){
+    public void updatePayAnswerOrder(AnswerUserOrder answerUserOrder) {
         repositoryApproved.updatePayAnswer(answerUserOrder.getIdUserOrder(), "Pay");
     }
 }

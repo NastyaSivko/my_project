@@ -16,7 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +43,7 @@ public class TestDefaultHotelRoomDao {
         dao.saveHotelRoom(new HotelRoom(null, "standart", "2", "302"));
         dao.saveHotelRoom(new HotelRoom(null, "honeymoon suite", "2", "110"));
 
-        UserOrder userOrderNew = new UserOrder(null, "usertest", "standart", "2","2020-10-07", "2020-10-10");
+        UserOrder userOrderNew = new UserOrder(null, "usertest", "standart", "2", "2020-10-07", "2020-10-10");
         userOrderDao.saveUserOrder(userOrderNew);
         Cost cost = new Cost(null, 1000);
 
@@ -107,7 +106,7 @@ public class TestDefaultHotelRoomDao {
     }
 
     @Test
-    void testGetHotelRoom(){
+    void testGetHotelRoom() {
         HotelRoom hotelRoom = new HotelRoom(null, "room", "5", "4");
         final long id = dao.saveHotelRoom(hotelRoom);
 
@@ -121,59 +120,63 @@ public class TestDefaultHotelRoomDao {
 
     @Test
     void getNumberRoomExistOne() {
-        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-06", "2020-10-10");
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-06", "2020-10-10");
 
 
         List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
 
-        for(int i = 0; i < numberRoom.size(); i++){
-        System.out.println(numberRoom.get(i));}
+        for (int i = 0; i < numberRoom.size(); i++) {
+            System.out.println(numberRoom.get(i));
+        }
         assertEquals(numberRoom.get(0), "302");
     }
 
     @Test
     void getNumberRoomExistTwo() {
-        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-06", "2020-10-07");
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-06", "2020-10-07");
 
 
         List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
 
-        for(int i = 0; i < numberRoom.size(); i++){
-            System.out.println(numberRoom.get(i));}
+        for (int i = 0; i < numberRoom.size(); i++) {
+            System.out.println(numberRoom.get(i));
+        }
         assertEquals(numberRoom.size(), 2);
     }
 
     @Test
     void getNumberRoomExistThree() {
-        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-10", "2020-10-17");
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-10", "2020-10-17");
 
 
         List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
 
-        for(int i = 0; i < numberRoom.size(); i++){
-            System.out.println(numberRoom.get(i));}
+        for (int i = 0; i < numberRoom.size(); i++) {
+            System.out.println(numberRoom.get(i));
+        }
         assertEquals(numberRoom.size(), 2);
     }
 
     @Test
     void getNumberRoomExistFour() {
-        UserOrder userOrder = new UserOrder(null,"user", "standart", "2", "2020-10-11", "2020-10-13");
+        UserOrder userOrder = new UserOrder(null, "user", "standart", "2", "2020-10-11", "2020-10-13");
 
 
         List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
 
-        for(int i = 0; i < numberRoom.size(); i++){
-            System.out.println(numberRoom.get(i));}
+        for (int i = 0; i < numberRoom.size(); i++) {
+            System.out.println(numberRoom.get(i));
+        }
         assertEquals(numberRoom.size(), 2);
     }
 
     @Test
     void getNumberRoomNotExist() {
-        UserOrder userOrder = new UserOrder(null,"user", "presidential suite", "2", "2020-10-07", "2020-10-10");
+        UserOrder userOrder = new UserOrder(null, "user", "presidential suite", "2", "2020-10-07", "2020-10-10");
         List<String> numberRoom = dao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
         System.out.println(numberRoom);
 
-        assertEquals(numberRoom.size(),0);
+        assertEquals(numberRoom.size(), 0);
     }
 
 

@@ -1,7 +1,5 @@
 package com.github.nastyasivko.project_final.model;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 public class LoginUser {
 
     private Long id;
@@ -10,11 +8,12 @@ public class LoginUser {
     private Long userId;
     private Role role;
 
-    public LoginUser( String login, String password,Role role) {
+    public LoginUser(String login, String password, Role role) {
         this.login = login;
         this.password = password;
         this.role = role;
     }
+
     public LoginUser(Long id, String login, String password, Long userId) {
         this.id = id;
         this.login = login;

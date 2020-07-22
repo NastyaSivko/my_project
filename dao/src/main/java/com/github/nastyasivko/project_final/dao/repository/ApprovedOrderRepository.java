@@ -1,7 +1,6 @@
 package com.github.nastyasivko.project_final.dao.repository;
 
 import com.github.nastyasivko.project_final.dao.entity.ApprovedOrderEntity;
-import com.github.nastyasivko.project_final.model.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +17,5 @@ public interface ApprovedOrderRepository extends JpaRepository<ApprovedOrderEnti
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("update ApprovedOrderEntity set payAnswer= :payAnswer where idUserOrder = :idUserOrder")
-    void updatePayAnswer(@Param("idUserOrder") Long idUserOrder,@Param("payAnswer") String payAnswer);
+    void updatePayAnswer(@Param("idUserOrder") Long idUserOrder, @Param("payAnswer") String payAnswer);
 }

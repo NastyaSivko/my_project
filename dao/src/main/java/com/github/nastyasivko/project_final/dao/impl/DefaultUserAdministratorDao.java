@@ -6,6 +6,7 @@ import com.github.nastyasivko.project_final.dao.converter.UserOrderConverter;
 import com.github.nastyasivko.project_final.dao.entity.*;
 import com.github.nastyasivko.project_final.dao.repository.*;
 import com.github.nastyasivko.project_final.model.Answer;
+import com.github.nastyasivko.project_final.model.AnswerUserOrder;
 import com.github.nastyasivko.project_final.model.Cost;
 import com.github.nastyasivko.project_final.model.UserOrder;
 
@@ -25,13 +26,15 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
     private final ApprovedOrderRepository repositoryApprovedOrder;
     private final DeniedOrderRepository repositoryDeniedOrder;
     private final NewOrderPagingRepository pagingRepository;
+    private final UserOrderRepository userOrderRepository;
 
-    public DefaultUserAdministratorDao(CostRepository repositoryCost, NewOrderRepository repositoryNewOrder, ApprovedOrderRepository repositoryApprovedOrder, DeniedOrderRepository repositoryDeniedOrder, NewOrderPagingRepository pagingRepository) {
+    public DefaultUserAdministratorDao(CostRepository repositoryCost, NewOrderRepository repositoryNewOrder, ApprovedOrderRepository repositoryApprovedOrder, DeniedOrderRepository repositoryDeniedOrder, NewOrderPagingRepository pagingRepository, UserOrderRepository userOrderRepository) {
         this.repositoryCost = repositoryCost;
         this.repositoryNewOrder = repositoryNewOrder;
         this.repositoryApprovedOrder = repositoryApprovedOrder;
         this.repositoryDeniedOrder = repositoryDeniedOrder;
         this.pagingRepository = pagingRepository;
+        this.userOrderRepository = userOrderRepository;
     }
 
     @Override
@@ -52,7 +55,10 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
     @Override
     public boolean deleteNewOrders(UserOrder userOrder) {
         List<NewOrderEntity> order = repositoryNewOrder.findByUserloginAndNameRoomAndNumberOfBeds(userOrder.getUserLogin(), userOrder.getNameRoom(), userOrder.getBeds());
+        long id = order.get(0).getId();
         repositoryNewOrder.delete(order.get(0));
+        log.info("new order id {} user's {} delete", id, userOrder.getUserLogin());
+
         return true;
     }
 
@@ -84,6 +90,7 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
         costRoomEntity.getApprovedOrdersEntities().add(approvedOrderEntity);
 
         repositoryApprovedOrder.save(approvedOrderEntity);
+        log.info(" order user's {} idUserOrder {} save approved", userOrderEntity.getUserLogin(), userOrderEntity.getId());
 
         return approvedOrderEntity.getId();
     }
@@ -95,7 +102,22 @@ public class DefaultUserAdministratorDao implements UserAdministratorDao {
         DeniedOrderEntity deniedOrderEntity = new DeniedOrderEntity(null, userOrderEntity.getId(), userOrderEntity.getDateStart(), userOrderEntity.getDateEnd(), Answer.NO);
 
         repositoryDeniedOrder.save(deniedOrderEntity);
+        log.info(" order user's {} idUserOrder {} save denied", userOrderEntity.getUserLogin(), userOrderEntity.getId());
 
         return deniedOrderEntity.getId();
     }
+
+    @Override
+    public List<AnswerUserOrder> getApprovedOrder() {
+        List<AnswerUserOrder> userOrders = new ArrayList<>();
+        List<UserOrderEntity> userOrder = userOrderRepository.findAll();
+        for (int i = 0; i < userOrder.size(); i++) {
+            List<ApprovedOrderEntity> userApprovedOrderEntity = repositoryApprovedOrder.findByIdUserOrder(userOrder.get(i).getId());
+            if (userApprovedOrderEntity.size() != 0) {
+                userOrders.add(new AnswerUserOrder(userOrder.get(i).getId(), userOrder.get(i).getUserLogin(), userOrder.get(i).getNameRoom(), userOrder.get(i).getNumberOfBeds(), userOrder.get(i).getDateStart(), userOrder.get(i).getDateEnd(), userApprovedOrderEntity.get(0).getAnswer(), userApprovedOrderEntity.get(0).getNumberRoom(), userApprovedOrderEntity.get(0).getCostRoomEntity().getCost(), userApprovedOrderEntity.get(0).getPayAnswer()));
+            }
+        }
+        return userOrders;
+    }
+
 }

@@ -2,7 +2,6 @@ package com.github.nastyasivko.project_final.dao.impl;
 
 import com.github.nastyasivko.project_final.dao.*;
 import com.github.nastyasivko.project_final.dao.config.DaoConfig;
-import com.github.nastyasivko.project_final.dao.entity.CostRoomEntity;
 import com.github.nastyasivko.project_final.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,7 +58,7 @@ public class TestDefaultUserDao {
     @BeforeEach
     public void init() {
         UserOrder userOrderA = new UserOrder(null, "usertestorder", "standart", "4", "2020-10-07", "2020-11-11");
-        UserOrder userOrderD = new UserOrder(null, "usertestorder", "standartroom", "5","2020-10-07", "2020-10-11");
+        UserOrder userOrderD = new UserOrder(null, "usertestorder", "standartroom", "5", "2020-10-07", "2020-10-11");
         userOrderDao.saveUserOrder(userOrderA);
         userOrderDao.saveUserOrder(userOrderD);
         costDao.saveCost(new Cost(null, 2000));
@@ -86,7 +85,7 @@ public class TestDefaultUserDao {
     }
 
     @Test
-    void  testUpdateApprovedOrder(){
+    void testUpdateApprovedOrder() {
         List<AnswerUserOrder> userOrders = dao.getUserOrders("usertestorder");
 
         dao.updatePayAnswerOrder(userOrders.get(0));

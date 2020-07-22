@@ -4,9 +4,9 @@ import com.github.nastyasivko.project_final.dao.entity.CostRoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CostRepository extends JpaRepository<CostRoomEntity, Long> {
     List<CostRoomEntity> findByOrderByCostAsc();
+
     CostRoomEntity findByCost(Integer cost);
 }

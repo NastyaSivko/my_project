@@ -1,11 +1,7 @@
 package com.github.nastyasivko.project_final.web.controller;
 
 import com.github.nastyasivko.project_final.dao.*;
-import com.github.nastyasivko.project_final.model.Cost;
-import com.github.nastyasivko.project_final.model.HotelRoom;
-import com.github.nastyasivko.project_final.model.LoginUser;
-import com.github.nastyasivko.project_final.model.UserOrder;
-import org.springframework.security.access.annotation.Secured;
+import com.github.nastyasivko.project_final.model.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +19,8 @@ import static java.lang.Integer.parseInt;
 @RequestMapping("/admin")
 public class AdminController {
 
-    public static final int NUMBER_ELEMENTS_FOR_PAGE = 10;
+    public static final int NUMBER_ELEMENTS_FOR_ROOM = 10;
+    public static final int NUMBER_ELEMENTS_FOR_ORDER = 3;
     private final UserAdministratorDao userAdministratorDao;
     private final CostDao costDao;
     private final HotelRoomDao hotelRoomDao;
@@ -45,10 +42,11 @@ public class AdminController {
             return "signIn";
         }
         LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
-        if(user.getLogin().equals("admin")) {
+        if (user.getLogin().equals("admin")) {
             return "admin";
         } else {
-        return "pageUser";}
+            return "pageUser";
+        }
     }
 
     @GetMapping("/vieworder")
@@ -64,10 +62,10 @@ public class AdminController {
             return "viewOrder";
         }
         int count = userOrders.size();
-        if (count % 3 == 0) {
-            rq.setAttribute("pageCount", (count / 3));
+        if (count % NUMBER_ELEMENTS_FOR_ORDER == 0) {
+            rq.setAttribute("pageCount", (count / NUMBER_ELEMENTS_FOR_ORDER));
         } else {
-            rq.setAttribute("pageCount", ((count / 3) + 1));
+            rq.setAttribute("pageCount", ((count / NUMBER_ELEMENTS_FOR_ORDER) + 1));
         }
         int pageNumber;
         if (rq.getParameter("page") != null) {
@@ -102,13 +100,13 @@ public class AdminController {
             return "signIn";
         }
         try {
-        UserOrder userOrder = (UserOrder) rq.getSession().getAttribute("userOrderAnswer");
-        List<String> listNumber = hotelRoomDao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
-        List<Cost> costList = costDao.getListCosts();
-        rq.setAttribute("number", listNumber);
-        rq.setAttribute("costList", costList);
-        return "answerForOrder";}
-        catch (NullPointerException e){
+            UserOrder userOrder = (UserOrder) rq.getSession().getAttribute("userOrderAnswer");
+            List<String> listNumber = hotelRoomDao.getNumberRoom(userOrder.getNameRoom(), userOrder.getBeds(), userOrder.getDateStart(), userOrder.getDateEnd());
+            List<Cost> costList = costDao.getListCosts();
+            rq.setAttribute("number", listNumber);
+            rq.setAttribute("costList", costList);
+            return "answerForOrder";
+        } catch (NullPointerException e) {
             rq.setAttribute("message", "You didn't choose user order");
             rq.getSession().removeAttribute("userOrderAnswer");
             return "answerForOrder";
@@ -158,7 +156,7 @@ public class AdminController {
     public String setSaveCost(HttpServletRequest rq, UsernamePasswordAuthenticationToken authentication) {
         String[] costList = rq.getParameterValues("costList");
         String cost = rq.getParameter("cost");
-        if(parseInt(cost) < 0) {
+        if (parseInt(cost) < 0) {
             rq.getSession().setAttribute("message", "Cost can't be negative!");
             return "redirect:/admin/savecost";
         }
@@ -175,6 +173,7 @@ public class AdminController {
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
             return "signIn";
         }
+        rq.removeAttribute("message");
         List<String> numberRoomList = hotelDao.getNumberRoom();
         rq.getSession().setAttribute("numberRoomList", numberRoomList);
         return "updateRooms";
@@ -201,7 +200,6 @@ public class AdminController {
         String bed = rq.getParameter("bedUpdate");
 
         HotelRoom oldHotelRoom = hotelRoomDao.getHotelRoom(numberRoomOld[0]);
-        HotelRoom room = new HotelRoom(null, nameRoom, bed, numberRoom);
         hotelRoomDao.updateHotelRoom(oldHotelRoom, nameRoom, bed, numberRoom);
 
         rq.getSession().setAttribute("message", "Update done");
@@ -220,17 +218,17 @@ public class AdminController {
     }
 
     @GetMapping("/allroom")
-    public String getAllRoom(HttpServletRequest rq){
+    public String getAllRoom(HttpServletRequest rq) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
             return "signIn";
         }
         List<HotelRoom> hotelRooms = hotelDao.getAllRoom();
         int count = hotelRooms.size();
-        if (count % NUMBER_ELEMENTS_FOR_PAGE == 0) {
-            rq.setAttribute("pageCount", (count / 10));
+        if (count % NUMBER_ELEMENTS_FOR_ROOM == 0) {
+            rq.setAttribute("pageCount", (count / NUMBER_ELEMENTS_FOR_ROOM));
         } else {
-            rq.setAttribute("pageCount", ((count / 10) + 1));
+            rq.setAttribute("pageCount", ((count / NUMBER_ELEMENTS_FOR_ROOM) + 1));
         }
         int pageNumber;
         if (rq.getParameter("page") != null) {
@@ -244,4 +242,18 @@ public class AdminController {
         return "allRoom";
     }
 
+    @GetMapping("/approvedorder")
+    public String getApprovedOrders(HttpServletRequest rq) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
+            return "signIn";
+        }
+        List<AnswerUserOrder> userOrders = userAdministratorDao.getApprovedOrder();
+        if (userOrders.size() == 0) {
+            rq.setAttribute("noanswer", "Not approved orders");
+            return "approvedOrder";
+        }
+        rq.setAttribute("userOrders", userOrders);
+        return "approvedOrder";
+    }
 }

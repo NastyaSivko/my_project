@@ -10,7 +10,6 @@ public class CostRoomEntity {
 
     private Long id;
 
-
     private List<ApprovedOrderEntity> approvedOrdersEntities = new ArrayList<>(0);
 
     private Integer cost;

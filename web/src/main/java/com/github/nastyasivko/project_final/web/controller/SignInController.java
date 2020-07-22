@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -41,7 +42,7 @@ public class SignInController {
             return "signIn";
         }
         LoginUser user = (LoginUser) rq.getSession().getAttribute("authUser");
-        if(user.getLogin().equals("admin")) {
+        if (user.getLogin().equals("admin")) {
             return "admin";
         }
         return "pageUser";
@@ -51,32 +52,32 @@ public class SignInController {
     public String login(HttpServletRequest rq) {
         String login = rq.getParameter("login");
         String password = rq.getParameter("password");
-        if(login.equals("admin") && password.equals("admin")) {
+        if (login.equals("admin") && password.equals("admin")) {
             rq.getSession().setAttribute("authUser", new LoginUser(login, password, Role.ADMIN));
-            Authentication auth = new UsernamePasswordAuthenticationToken(new LoginUser(login, password, Role.ADMIN), null, getAuthorities());
+            Authentication auth = new UsernamePasswordAuthenticationToken(new LoginUser(login, password, Role.ADMIN), null, getAuthorities(Role.ADMIN));
             SecurityContextHolder.getContext().setAuthentication(auth);
             return "admin";
         }
 
         LoginUser user = loginUserDao.findLoginUser(login);
-        user.setRole(Role.USER);
 
-        if (login.equals("") && password.equals("")){
+        if (login.equals("") && password.equals("")) {
             return "signIn";
         }
 
-        if (user == null){
+        if (user == null) {
             rq.setAttribute("error", "You don't sign up");
             return "signIn";
         } else {
             if
-            (!user.getPassword().equals(password)){
+            (!user.getPassword().equals(password)) {
                 rq.setAttribute("error", "Wrong password");
                 return "signIn";
             } else {
                 log.info("user {}{} logged", user.getLogin());
+                user.setRole(Role.USER);
                 rq.getSession().setAttribute("authUser", user);
-                Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+                Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities(Role.USER));
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
                 return "pageUser";
@@ -84,8 +85,11 @@ public class SignInController {
         }
     }
 
-    private List<GrantedAuthority> getAuthorities() {
-        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER",
-                (GrantedAuthority) () -> "ROLE_ADMIN");
+    private List<GrantedAuthority> getAuthorities(Role admin) {
+        if (admin == Role.ADMIN){
+            return Collections.singletonList((GrantedAuthority) () -> "ROLE_ADMIN");
+        } else {
+            return Collections.singletonList((GrantedAuthority) () -> "ROLE_USER");
+        }
     }
 }

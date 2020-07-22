@@ -27,14 +27,14 @@ public class TestDefaultLoginUserDao {
     @Test
     void findLoginUserExist() {
         User user = new User(null, "user", "user", "1234567");
-        LoginUser loginUser = new LoginUser(null,"loginuser", "user", null);
+        LoginUser loginUser = new LoginUser(null, "loginuser", "user", null);
 
         userDao.saveLoginUser(user, loginUser);
         LoginUser userForDb = loginUserDao.findLoginUser("loginuser");
 
         assertNotNull(user);
-        assertEquals(userForDb.getLogin(),loginUser.getLogin());
-        assertEquals(userForDb.getPassword(),loginUser.getPassword());
+        assertEquals(userForDb.getLogin(), loginUser.getLogin());
+        assertEquals(userForDb.getPassword(), loginUser.getPassword());
     }
 
     @Test
