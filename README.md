@@ -1,0 +1,2 @@
+# my_project
+Application to order the hotel. The application is located at the link: http://localhost:8080/hotel-kempinski . You can sign up and sign in. The user can order rooms and wait for a response from the administrator. If the answer is "YES", then the user have to pay. You can sign in as an administrator, to do this enter “admin” and “admin” in the login and password fields respectively. The administrator reviews the orders, and if there are free rooms, he confirms, otherwise refuses.
